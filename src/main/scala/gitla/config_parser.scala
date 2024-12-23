@@ -18,12 +18,11 @@ object ConfigParser {
     } else {
       // If the file doesn't exist, create a new one and prompt the user for information
       createGlobalConfig(gitlaConfigFile)
-      Map()
     }
   }
 
   // Function to create a .gitlaconfig file in the user's home directory
-  def createGlobalConfig(file: File): Unit = {
+  def createGlobalConfig(file: File): Map[String, String] = {
     println("No global config found. Please enter your details.")
     println("Enter your name:")
     val name = scala.io.StdIn.readLine()
@@ -41,6 +40,7 @@ object ConfigParser {
     writer.println(globalConfigContent)
     writer.close()
     println(s"Created global config at ${file.getAbsolutePath}")
+    parseToml(file)
   }
 
   // Function to parse a TOML file into a Map

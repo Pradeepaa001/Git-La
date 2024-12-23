@@ -13,7 +13,6 @@ object GitlaApp {
       println(s"This directory is already a git repository: $repoDir")
     } else {
       createRepoStructure(repoDir, gitlaDir)
-      createConfigFiles(repoDir)
       ConfigParser.updateConfig(repoName.getOrElse(""), repoDir)
     }
   }
@@ -26,6 +25,8 @@ object GitlaApp {
     createDir(s"$repoDir/.gitla/indexObject")
     createDir(s"$repoDir/.gitla/fileObject")
     removeRefsFolder(s"$repoDir/.gitla")
+    createFile(s"$repoDir/.gitla/index", "")
+
   }
 
   def createFile(filePath: String, content: String): Unit = {
@@ -65,25 +66,4 @@ object GitlaApp {
     }
   }
 
-  def createConfigFiles(repoDir: String): Unit = {
-    val coreConfig = Map(
-      "repositoryformatversion" -> "0",
-      "filemode" -> "true",
-      "bare" -> "false"
-    )
-
-    val configFile = new File(s"$repoDir/.gitla/config")
-    val configWriter = new PrintWriter(configFile)
-    try {
-      configWriter.println("[core]")
-      coreConfig.foreach { case (key, value) =>
-        configWriter.println(s"    $key = $value")
-      }
-      println("Created .gitla/config.")
-    } finally {
-      configWriter.close()
-    }
-
-    createFile(s"$repoDir/.gitla/index", "")
-  }
 }
