@@ -5,11 +5,6 @@ import scala.io.Source
 
 object GitlaApp {
 
-  def main(args: Array[String]): Unit = {
-    val repoName = if (args.nonEmpty) Some(args(0)) else None
-    gitInit(repoName)
-  }
-
   def gitInit(repoName: Option[String]): Unit = {
     val repoDir = repoName.getOrElse(new File(".").getName)
     val gitlaDir = new File(s"$repoDir/.gitla")

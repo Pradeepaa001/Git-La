@@ -1,4 +1,4 @@
-name := "Scit"
+name := "Gitla"
 
 version := "0.1"
 
