@@ -8,14 +8,17 @@ object Gitla {
     }
 
     args(0) match {
-      case "init" => 
+      case "init" =>
         println("Running init command")
         GitlaApp.gitInit(args.tail.headOption)
+
       case "add" =>
-        if (args.length < 2) {
-          println("Usage: gitla add <file>")
-        } else {
+        if (args.length == 2 && args(1) == ".") {
+          Add.gitAddAll()
+        } else if (args.length == 2) {
           Add.gitAdd(args(1))
+        } else {
+          println("Usage: gitla add <file-path> or gitla add .")
         }
       case "config" =>
         if (args.length < 2) {

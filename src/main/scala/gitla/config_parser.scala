@@ -9,7 +9,6 @@ import java.io.FileOutputStream
 object ConfigParser {
 
   private def globalConfigFilePath: String = s"${System.getProperty("user.home")}/.gitlaconfig"
-  // Function to get the user-specific Gitla config (global config)
   def getGlobalConfig(): Map[String, String] = {
     val homeDir = System.getProperty("user.home")
     val gitlaConfigFile = new File(s"$homeDir/.gitlaconfig")
@@ -23,7 +22,6 @@ object ConfigParser {
     }
   }
 
-  // Function to create a .gitlaconfig file in the user's home directory
   def createGlobalConfig(file: File): Map[String, String] = {
     println("Creating a new global config. Please enter your details.")
     println("Enter your name:")
@@ -45,12 +43,10 @@ object ConfigParser {
     parseToml(file)
   }
 
-  // Function to parse a TOML file into a Map
   def parseToml(file: File): Map[String, String] = {
     val lines = Source.fromFile(file).getLines().toList
     val sections = lines.mkString("\n").split("\\[.*?\\]").drop(1) // Split by sections
 
-    // Extract the key-value pairs
     sections.flatMap { section =>
       val keyValues = section.split("\n").map(_.split("=")).collect {
         case Array(key, value) => key.trim -> value.trim.stripPrefix("\"").stripSuffix("\"")
@@ -59,15 +55,12 @@ object ConfigParser {
     }.toMap
   }
 
-  // Function to write the updated global configuration to the .gitla config of the repository
   def updateConfig(repoName: String, repoDir: String): Unit = {
     val homeDir = System.getProperty("user.home")
     val gitlaConfigFile = new File(s"$homeDir/.gitlaconfig")
 
-    // Get the global configuration (user details)
     val globalConfig = getGlobalConfig()
 
-    // Read the local configuration (if exists) and append the user data to it
     val localConfigFile = new File(s"$repoDir/.gitla/config")
     val configWriter = new PrintWriter(localConfigFile)
     try {
@@ -86,7 +79,6 @@ object ConfigParser {
     }
   }
 
-  // Function to edit an existing config file by adding a new section
   def addSection(file: File, sectionName: String): Unit = {
     if (!file.exists()) {
       println(s"Config file not found: ${file.getAbsolutePath}")
@@ -101,7 +93,6 @@ object ConfigParser {
     }
   }
 
-  // Function to update an existing section with a new key-value pair
   def updateSection(file: File, sectionName: String, key: String, value: String): Unit = {
     if (!file.exists()) {
       println(s"Config file not found: ${file.getAbsolutePath}")
@@ -130,7 +121,6 @@ object ConfigParser {
       writer.close()
     }
   }
-  // Function to view the contents of the config file
   def viewConfig(file: File): Unit = {
       if (file.exists()) {
         println(s"Contents of ${file.getAbsolutePath}:")
@@ -161,7 +151,6 @@ object ConfigParser {
     }
   }
 
-  // Entry point for local commands
   def handleLocalConfig(repoDir: String, command: String, args: Array[String]): Unit = {
     val localConfigFile = new File(s"$repoDir/config")
 
@@ -183,7 +172,6 @@ object ConfigParser {
     }
   }
 
-  // Function to show CLI help for config-related commands
   def showHelp(): Unit = {
     println(
       """
