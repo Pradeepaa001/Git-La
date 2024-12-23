@@ -10,7 +10,13 @@ object Gitla {
     args(0) match {
       case "init" => 
         println("Running init command")
-        GitlaApp.gitInit(args.tail.headOption) // Process the 'trial' argument or other init arguments
+        GitlaApp.gitInit(args.tail.headOption)
+      case "add" =>
+        if (args.length < 2) {
+          println("Usage: gitla add <file>")
+        } else {
+          Add.gitAdd(args(1))
+        }
       case _ =>
         println(s"Unknown command: ${args(0)}")
     }

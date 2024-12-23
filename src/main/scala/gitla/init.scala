@@ -1,6 +1,9 @@
 package gitla
 
 import java.io.{File, PrintWriter}
+import java.nio.file.{Files, Paths}
+import java.nio.charset.StandardCharsets
+import java.nio.file.StandardOpenOption
 import scala.io.Source
 
 object GitlaApp {
@@ -25,7 +28,10 @@ object GitlaApp {
     createDir(s"$repoDir/.gitla/indexObject")
     createDir(s"$repoDir/.gitla/fileObject")
     removeRefsFolder(s"$repoDir/.gitla")
-    createFile(s"$repoDir/.gitla/index", "")
+    createFile(s"$repoDir/.gitla/index.toml", "")
+    val defaultTomlContent = "[hash]\n"
+    val indexFilePath = s"$repoDir/.gitla/index.toml"
+    Files.write(Paths.get(indexFilePath), defaultTomlContent.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE)
 
   }
 
