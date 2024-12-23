@@ -14,6 +14,7 @@ object GitlaApp {
     } else {
       createRepoStructure(repoDir, gitlaDir)
       createConfigFiles(repoDir)
+      ConfigParser.updateConfig(repoName.getOrElse(""), repoDir)
     }
   }
 

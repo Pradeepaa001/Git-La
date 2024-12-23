@@ -7,6 +7,7 @@ scalaVersion := "3.6.2"
 lazy val root = (project in file("."))
   .enablePlugins(AssemblyPlugin)
   .settings(
+    mainClass in Compile := Some("gitla.Gitla"),
     assembly / mainClass := Some("gitla.Gitla"),
     assembly / assemblyJarName := "gitla.jar",
     assembly / assemblyMergeStrategy := {
