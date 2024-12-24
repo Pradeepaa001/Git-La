@@ -8,7 +8,7 @@ import java.io.FileOutputStream
 
 object ConfigParser {
 
-  // Function to get the user-specific Gitla config (global config)
+  private def globalConfigFilePath: String = s"${System.getProperty("user.home")}/.gitlaconfig"
   def getGlobalConfig(): Map[String, String] = {
     val homeDir = System.getProperty("user.home")
     val gitlaConfigFile = new File(s"$homeDir/.gitlaconfig")
@@ -17,13 +17,13 @@ object ConfigParser {
       parseToml(gitlaConfigFile)
     } else {
       // If the file doesn't exist, create a new one and prompt the user for information
+      println("Global Config not found")
       createGlobalConfig(gitlaConfigFile)
     }
   }
 
-  // Function to create a .gitlaconfig file in the user's home directory
   def createGlobalConfig(file: File): Map[String, String] = {
-    println("No global config found. Please enter your details.")
+    println("Creating a new global config. Please enter your details.")
     println("Enter your name:")
     val name = scala.io.StdIn.readLine()
     println("Enter your email:")
@@ -43,12 +43,10 @@ object ConfigParser {
     parseToml(file)
   }
 
-  // Function to parse a TOML file into a Map
   def parseToml(file: File): Map[String, String] = {
     val lines = Source.fromFile(file).getLines().toList
     val sections = lines.mkString("\n").split("\\[.*?\\]").drop(1) // Split by sections
 
-    // Extract the key-value pairs
     sections.flatMap { section =>
       val keyValues = section.split("\n").map(_.split("=")).collect {
         case Array(key, value) => key.trim -> value.trim.stripPrefix("\"").stripSuffix("\"")
@@ -57,15 +55,12 @@ object ConfigParser {
     }.toMap
   }
 
-  // Function to write the updated global configuration to the .gitla config of the repository
   def updateConfig(repoName: String, repoDir: String): Unit = {
     val homeDir = System.getProperty("user.home")
     val gitlaConfigFile = new File(s"$homeDir/.gitlaconfig")
 
-    // Get the global configuration (user details)
     val globalConfig = getGlobalConfig()
 
-    // Read the local configuration (if exists) and append the user data to it
     val localConfigFile = new File(s"$repoDir/.gitla/config")
     val configWriter = new PrintWriter(localConfigFile)
     try {
@@ -84,50 +79,121 @@ object ConfigParser {
     }
   }
 
-  // Function to edit an existing config file by adding a new section
   def addSection(file: File, sectionName: String): Unit = {
-    val writer = new PrintWriter(new FileOutputStream(file, true))
-    writer.println(s"[$sectionName]")
-    writer.close()
-  }
-
-  // Function to update an existing section with a new key-value pair
-  def updateSection(file: File, sectionName: String, key: String, value: String): Unit = {
-    val lines = Source.fromFile(file).getLines().toList
-    val updatedLines = lines.map {
-      case line if line.startsWith(s"[$sectionName]") =>
-        val section = lines.dropWhile(!_.startsWith(s"[$sectionName]")).takeWhile(!_.startsWith("["))
-        section.mkString("\n") + s"    $key = \"$value\""
-      case other => other
+    if (!file.exists()) {
+      println(s"Config file not found: ${file.getAbsolutePath}")
+      return
     }
+    val writer = new PrintWriter(new FileOutputStream(file, true))
+    try {
+      writer.println(s"[$sectionName]")
+      println(s"Added section [$sectionName] to ${file.getAbsolutePath}")
+    } finally {
+      writer.close()
+    }
+  }
+
+  def updateSection(file: File, sectionName: String, key: String, value: String): Unit = {
+    if (!file.exists()) {
+      println(s"Config file not found: ${file.getAbsolutePath}")
+      return
+    }
+
+    val lines = Source.fromFile(file).getLines().toList
+    val updatedLines = if (lines.exists(_.startsWith(s"[$sectionName]"))) {
+      val inSection = lines.foldLeft((List.empty[String], false)) {
+        case ((updated, inSection), line) =>
+          if (line.startsWith(s"[$sectionName]")) (updated :+ line, true)
+          else if (inSection && line.startsWith("[") && !line.startsWith(s"[$sectionName]")) (updated :+ s"    $key = \"$value\"", false)
+          else if (inSection && line.startsWith(s"    $key =")) (updated :+ s"    $key = \"$value\"", true)
+          else (updated :+ line, inSection)
+      }._1
+      inSection :+ s"    $key = \"$value\""
+    } else {
+      lines :+ s"[$sectionName]\n    $key = \"$value\""
+    }
+
     val writer = new PrintWriter(file)
-    updatedLines.foreach(writer.println)
-    writer.close()
+    try {
+      updatedLines.foreach(writer.println)
+      println(s"Updated [$sectionName] in ${file.getAbsolutePath}")
+    } finally {
+      writer.close()
+    }
   }
-
-  // Function to view the contents of the config file
   def viewConfig(file: File): Unit = {
-    val lines = Source.fromFile(file).getLines().mkString("\n")
-    println(s"Config file contents:\n$lines")
+      if (file.exists()) {
+        println(s"Contents of ${file.getAbsolutePath}:")
+        Source.fromFile(file).getLines().foreach(println)
+      } else {
+        println(s"Config file not found: ${file.getAbsolutePath}")
+      }
+  }
+  def handleGlobalConfig(command: String, args: Array[String]): Unit = {
+    val globalConfigFile = new File(globalConfigFilePath)
+
+    command match {
+      case "view" => viewConfig(globalConfigFile)
+      case "add" =>
+        if (args.length < 1) {
+          println("Usage: gitla config --global add <section-name>")
+        } else {
+          addSection(globalConfigFile, args(0))
+        }
+      case "update" =>
+        if (args.length < 3) {
+          println("Usage: gitla config --global update <section-name> <key> <value>")
+        } else {
+          updateSection(globalConfigFile, args(0), args(1), args(2))
+        }
+      case "create" => createGlobalConfig(new File(globalConfigFilePath))
+      case _ => println(s"Unknown global config command: $command")
+    }
   }
 
-  // Function to show CLI help for config-related commands
+  def handleLocalConfig(repoDir: String, command: String, args: Array[String]): Unit = {
+    val localConfigFile = new File(s"$repoDir/config")
+
+    command match {
+      case "view" => viewConfig(localConfigFile)
+      case "add" =>
+        if (args.length < 1) {
+          println("Usage: gitla config --local add <section-name>")
+        } else {
+          addSection(localConfigFile, args(0))
+        }
+      case "update" =>
+        if (args.length < 3) {
+          println("Usage: gitla config --local update <section-name> <key> <value>")
+        } else {
+          updateSection(localConfigFile, args(0), args(1), args(2))
+        }
+      case _ => println(s"Unknown local config command: $command")
+    }
+  }
+
   def showHelp(): Unit = {
     println(
       """
+        |Usage: gitla config [--global|--local] <command> [args]
+        |
         |Commands:
-        |  --global: Operates on the global config file in the user's home directory (.gitlaconfig).
-        |  --local: Operates on the local config file in the repo's .gitla folder (.gitla/config).
+        |  --global:
+        |    view      View the global config file
+        |    add       Add a new section to the global config
+        |    update    Update a section in the global config
+        |    create    Create a new global config file
         |
-        |Commands with --global:
-        |  create: Creates the .gitlaconfig file and prompts for user details.
-        |  update: Updates the global config with user details.
+        |  --local:
+        |    view      View the local config file
+        |    add       Add a new section to the local config
+        |    update    Update a section in the local config
         |
-        |Commands with --local:
-        |  view: Views the contents of the local repo config.
-        |  add: Adds a section to the local config.
-        |  update: Updates a section in the local config.
-        """.stripMargin
+        |Examples:
+        |  gitla config view --global
+        |  gitla config add user --local
+        |  gitla config update user name "RusLa"
+        |""".stripMargin
     )
   }
 }
