@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>Gitla’s Documentation &#8212; Gitla 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="_static/material.css?v=79c92029" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue data-md-color-accent=light-blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#index" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="#" title="Gitla 1.0 documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">Gitla Documentation</span>
+          <span class="md-header-nav__topic"> Gitla’s Documentation </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "versions.json",
+        target_loc = "../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="#" class="md-tabs__link">Gitla 1.0 documentation</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="#" title="Gitla 1.0 documentation" class="md-nav__button md-logo">
+      
+        <img src="_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="#"
+       title="Gitla 1.0 documentation">Gitla Documentation</a>
+  </label>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#index--page-root" class="md-nav__link">Gitla’s Documentation</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#overview" class="md-nav__link">Overview</a>
+        </li>
+        <li class="md-nav__item"><a href="#core-features" class="md-nav__link">Core Features</a>
+        </li>
+        <li class="md-nav__item"><a href="#data-structures" class="md-nav__link">Data Structures</a>
+        </li>
+        <li class="md-nav__item"><a href="#requirements" class="md-nav__link">Requirements</a>
+        </li>
+        <li class="md-nav__item"><a href="#installation" class="md-nav__link">Installation</a>
+        </li>
+        <li class="md-nav__item"><a href="#usage" class="md-nav__link">Usage</a>
+        </li>
+        <li class="md-nav__item"><a href="#available-commands" class="md-nav__link">Available Commands</a>
+        </li>
+        <li class="md-nav__item"><a href="#configuration" class="md-nav__link">Configuration</a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#developer-documentation" class="md-nav__link">Developer Documentation</a>
+        </li>
+        <li class="md-nav__item"><a href="#building-and-running-gitla" class="md-nav__link">Building and Running Gitla</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#license" class="md-nav__link">License</a>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="_sources/index.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="gitla-s-documentation">
+<h1 id="index--page-root">Gitla’s Documentation<a class="headerlink" href="#index--page-root" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="overview">
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Gitla is a Git-like version control system implemented in Scala 3.x. It offers basic Git functionality such as repository initialization, file tracking, and configuration management, all with a minimal and extensible design.</p>
+<p>Gitla aims to simulate Git’s core features while providing an easy-to-understand, file-based architecture. The system focuses on performance, simplicity, and flexibility, allowing developers to extend and customize it as needed.</p>
+</section>
+<section id="core-features">
+<h2 id="core-features">Core Features<a class="headerlink" href="#core-features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Repository Initialization</strong>: Supports creating new Gitla repositories with required directory structures.</p></li>
+<li><p><strong>Configuration Management</strong>: Allows both global and local configuration for repositories.</p></li>
+<li><p><strong>File-Based Data Structures</strong>: Mimics Git’s use of files and directories to manage version control data.</p></li>
+</ul>
+</section>
+<section id="data-structures">
+<h2 id="data-structures">Data Structures<a class="headerlink" href="#data-structures" title="Link to this heading">¶</a></h2>
+<p>Gitla uses several key data structures to manage repositories and configurations:</p>
+<ol class="arabic simple">
+<li><p><strong>File and Directory Structure</strong>:
+- Represents the <cite>.gitla</cite> directory and its subdirectories, such as <cite>objects</cite>, <cite>indexObject</cite>, and <cite>fileObject</cite>.
+- Mimics Git’s structure for repository management.</p></li>
+<li><p><strong>Maps</strong>:
+- Used for managing configuration data, such as storing properties like <cite>repositoryformatversion</cite> and <cite>bare</cite>.
+- <cite>Map[String, String]</cite> is used to handle configuration settings and can easily serialize into configuration files.</p></li>
+<li><p><strong>Recursive Functions</strong>:
+- For tasks like directory deletion, recursive functions ensure proper cleanup of nested files and directories within the <cite>.gitla</cite> folder.</p></li>
+<li><p><strong>Streams and Strings</strong>:
+- Used for reading from and writing to files, such as the <cite>HEAD</cite> file and configuration files, leveraging <cite>PrintWriter</cite> and <cite>Source</cite> from Scala’s standard library.</p></li>
+</ol>
+</section>
+<section id="requirements">
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<p>To run Gitla, the following software is required:</p>
+<ul class="simple">
+<li><p><strong>Scala</strong>: Version 3.x</p></li>
+<li><p><strong>sbt</strong>: Version 1.x</p></li>
+<li><p><strong>Java</strong>: Version 11 or later</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<p>To install and run Gitla, follow these steps:</p>
+<ol class="arabic">
+<li><p><strong>Clone the Repository</strong>:
+Clone the Gitla repository to your local machine:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>git clone <a class="reference external" href="https://gitlab.com/rusla/gitla.git">https://gitlab.com/rusla/gitla.git</a></p>
+</div></blockquote>
+</li>
+<li><p><strong>Navigate to the Project Directory</strong>:
+Change to the directory where you cloned Gitla:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>cd gitla</p>
+</div></blockquote>
+</li>
+<li><p><strong>Run the Project</strong>:
+Use sbt to run the project:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>sbt run</p>
+</div></blockquote>
+</li>
+</ol>
+</section>
+<section id="usage">
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>To initialize a new Gitla repository, use the following command:</p>
+<p>Replace <cite>&lt;repo-name&gt;</cite> with the name you wish to assign to the repository. If no repository name is provided, Gitla will use the current directory as the repository name.</p>
+</section>
+<section id="available-commands">
+<h2 id="available-commands">Available Commands<a class="headerlink" href="#available-commands" title="Link to this heading">¶</a></h2>
+<p>Gitla supports several commands:</p>
+<ul class="simple">
+<li><p><strong>init</strong>: Initializes a new Gitla repository.
+- Usage: <cite>gitla init &lt;repo-name&gt;</cite>
+- This will create the necessary directory structure and configuration files for the repository.</p></li>
+</ul>
+</section>
+<section id="configuration">
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
+<p>Gitla supports both global and local configuration files to manage user and repository-specific settings:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Global Configuration</strong>:</dt><dd><ul>
+<li><p>Stored in the user’s home directory (<cite>~/.gitlaconfig</cite>).</p></li>
+<li><p>Contains user-specific information, such as name and email, which is used across all repositories.</p></li>
+<li><p>If the global configuration file does not exist, Gitla will prompt you to create one when initializing a repository.</p></li>
+<li><p>Ensures consistency of user information across all repositories managed by Gitla.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Local Configuration</strong>:</dt><dd><ul>
+<li><p>Stored within the <cite>.gitla</cite> folder of each repository.</p></li>
+<li><p>Contains repository-specific settings, such as the repository name and user information.</p></li>
+<li><p>These settings can be updated manually or through Gitla’s CLI commands.</p></li>
+<li><p>Allows each repository to have its own settings, while still using the global configuration for user details like name and email.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+<section id="developer-documentation">
+<h1 id="developer-documentation">Developer Documentation<a class="headerlink" href="#developer-documentation" title="Link to this heading">¶</a></h1>
+<p>To contribute to Gitla or extend its functionality, understanding the core components of the codebase is essential. The following components are the key building blocks of Gitla:</p>
+<ul class="simple">
+<li><p><strong>GitlaApp</strong>: Contains the main application logic for handling commands such as <cite>init</cite> and creating the repository structure.</p></li>
+<li><p><strong>ConfigParser</strong>: Manages the reading, writing, and updating of configuration files.</p></li>
+<li><p><strong>Gitla</strong>: The entry point for the application, responsible for parsing command-line arguments and invoking the appropriate actions.</p></li>
+</ul>
+</section>
+<section id="building-and-running-gitla">
+<h1 id="building-and-running-gitla">Building and Running Gitla<a class="headerlink" href="#building-and-running-gitla" title="Link to this heading">¶</a></h1>
+<p>Follow these steps to build and run Gitla locally:</p>
+<ol class="arabic">
+<li><p><strong>Clone the repository</strong>:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>git clone <a class="reference external" href="https://github.com/yourusername/gitla.git">https://github.com/yourusername/gitla.git</a></p>
+</div></blockquote>
+</li>
+<li><p><strong>Compile the project</strong>:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>sbt compile</p>
+</div></blockquote>
+</li>
+<li><p><strong>Run the project</strong>:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>sbt run</p>
+</div></blockquote>
+</li>
+</ol>
+<p>For more detailed information on building, testing, and contributing, please refer to the specific module documentation.</p>
+<section id="license">
+<h2 id="license">License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>This project is licensed under the MIT License. See <cite>LICENSE</cite> for more details.</p>
+</section>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, Lithikha, Pradeepaa, Ragini, Smriti.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>
