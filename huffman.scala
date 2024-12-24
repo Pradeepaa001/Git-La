@@ -35,12 +35,12 @@ object huffman{
         
         val input_string = args.mkString(" ")
         val frequency = input_string.groupMapReduce(identity)(_ => 1)(_ + _)
-        println(frequency)
+        //println(frequency)
         val root = buildTree(frequency)
-        println(root)
+        //println(root)
         val code =  generateCode(root)
-        println(code)
+        println("Map: " + code)
         val encoded_str = input_string.flatMap(code.get).mkString
-        println(encoded_str)
+        println("Encoded String: " + encoded_str)
     }
 }
