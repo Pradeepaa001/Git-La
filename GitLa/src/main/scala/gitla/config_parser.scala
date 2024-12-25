@@ -1,175 +1,156 @@
 package gitla
 
-import java.io.{File, PrintWriter}
+import java.io.{File, PrintWriter, FileOutputStream}
 import scala.io.Source
-import java.nio.file.{Paths, Files}
-import java.io.FileOutputStream
-
 
 object ConfigParser {
 
   private def globalConfigFilePath: String = s"${System.getProperty("user.home")}/.gitlaconfig"
+
+  private def createFileIfAbsent(file: File, content: String): Unit = {
+    if (!file.exists()) {
+      val writer = new PrintWriter(file)
+      try {
+        writer.println(content)
+        println(s"Created new file at ${file.getAbsolutePath}")
+      } finally {
+        writer.close()
+      }
+    }
+  }
+
+  private def writeToFile(file: File, content: String): Unit = {
+    val writer = new PrintWriter(file)
+    try writer.print(content)
+    finally writer.close()
+  }
+
+  private def appendToFile(file: File, content: String): Unit = {
+    val writer = new PrintWriter(new FileOutputStream(file, true))
+    try writer.println(content)
+    finally writer.close()
+  }
+
+  private def readFile(file: File): List[String] = {
+    if (file.exists()) Source.fromFile(file).getLines().toList else Nil
+  }
+
+  private def parseToml(lines: List[String]): Map[String, String] = {
+    lines.mkString("\n").split("\\[.*?\\]").drop(1).flatMap { section =>
+      section.split("\n").map(_.split("=")).collect {
+        case Array(key, value) => key.trim -> value.trim.stripPrefix("\"").stripSuffix("\"")
+      }
+    }.toMap
+  }
+
   def getGlobalConfig(): Map[String, String] = {
-    val homeDir = System.getProperty("user.home")
-    val gitlaConfigFile = new File(s"$homeDir/.gitlaconfig")
-    if (gitlaConfigFile.exists()) {
-      // If the file exists, read and parse it
-      parseToml(gitlaConfigFile)
+    val globalFile = new File(globalConfigFilePath)
+    if (globalFile.exists()) {
+      parseToml(readFile(globalFile))
     } else {
-      // If the file doesn't exist, create a new one and prompt the user for information
-      println("Global Config not found")
-      createGlobalConfig(gitlaConfigFile)
+      println("Global Config not found. Creating a new one.")
+      createGlobalConfig(globalFile)
     }
   }
 
   def createGlobalConfig(file: File): Map[String, String] = {
     println("Creating a new global config. Please enter your details.")
-    println("Enter your name:")
-    val name = scala.io.StdIn.readLine()
-    println("Enter your email:")
-    val email = scala.io.StdIn.readLine()
+    val name = promptInput("Enter your name:")
+    val email = promptInput("Enter your email:")
 
-    val globalConfigContent =
+    val content =
       s"""
          |[user]
          |    name = "$name"
          |    email = "$email"
-      """.stripMargin
+         |""".stripMargin
 
-    val writer = new PrintWriter(file)
-    writer.println(globalConfigContent)
-    writer.close()
-    println(s"Created global config at ${file.getAbsolutePath}")
-    parseToml(file)
+    writeToFile(file, content)
+    println(s"Global config created at ${file.getAbsolutePath}")
+    parseToml(content.split("\n").toList)
   }
 
-  def parseToml(file: File): Map[String, String] = {
-    val lines = Source.fromFile(file).getLines().toList
-    val sections = lines.mkString("\n").split("\\[.*?\\]").drop(1) // Split by sections
-
-    sections.flatMap { section =>
-      val keyValues = section.split("\n").map(_.split("=")).collect {
-        case Array(key, value) => key.trim -> value.trim.stripPrefix("\"").stripSuffix("\"")
-      }
-      keyValues
-    }.toMap
+  private def promptInput(prompt: String): String = {
+    println(prompt)
+    scala.io.StdIn.readLine()
   }
 
   def updateConfig(repoName: String, repoDir: String): Unit = {
-    val homeDir = System.getProperty("user.home")
-    val gitlaConfigFile = new File(s"$homeDir/.gitlaconfig")
-
+    val localFile = new File(s"$repoDir/.gitla/config")
     val globalConfig = getGlobalConfig()
 
-    val localConfigFile = new File(s"$repoDir/.gitla/config")
-    val configWriter = new PrintWriter(localConfigFile)
-    try {
-      configWriter.println("[core]")
-      configWriter.println(s"    repositoryname = \"$repoName\"")
+    val content =
+      s"""
+         |[core]
+         |    repositoryname = "$repoName"
+         |${formatSection("user", globalConfig)}
+         |""".stripMargin
 
-      if (globalConfig.nonEmpty) {
-        configWriter.println("[user]")
-        globalConfig.foreach { case (key, value) =>
-          configWriter.println(s"    $key = \"$value\"")
-        }
-      }
-      println(s"Updated .gitla/config in the repo directory: $repoDir")
-    } finally {
-      configWriter.close()
-    }
+    writeToFile(localFile, content)
+    println(s"Updated .gitla/config in repository: $repoDir")
+  }
+
+  private def formatSection(section: String, data: Map[String, String]): String = {
+    if (data.isEmpty) "" else s"[$section]\n" + data.map { case (k, v) => s"    $k = \"$v\"" }.mkString("\n")
   }
 
   def addSection(file: File, sectionName: String): Unit = {
-    if (!file.exists()) {
-      println(s"Config file not found: ${file.getAbsolutePath}")
-      return
-    }
-    val writer = new PrintWriter(new FileOutputStream(file, true))
-    try {
-      writer.println(s"[$sectionName]")
-      println(s"Added section [$sectionName] to ${file.getAbsolutePath}")
-    } finally {
-      writer.close()
-    }
+    appendToFile(file, s"[$sectionName]")
+    println(s"Added section [$sectionName] to ${file.getAbsolutePath}")
   }
 
   def updateSection(file: File, sectionName: String, key: String, value: String): Unit = {
-    if (!file.exists()) {
-      println(s"Config file not found: ${file.getAbsolutePath}")
-      return
-    }
-
-    val lines = Source.fromFile(file).getLines().toList
-    val updatedLines = if (lines.exists(_.startsWith(s"[$sectionName]"))) {
-      val inSection = lines.foldLeft((List.empty[String], false)) {
-        case ((updated, inSection), line) =>
-          if (line.startsWith(s"[$sectionName]")) (updated :+ line, true)
-          else if (inSection && line.startsWith("[") && !line.startsWith(s"[$sectionName]")) (updated :+ s"    $key = \"$value\"", false)
-          else if (inSection && line.startsWith(s"    $key =")) (updated :+ s"    $key = \"$value\"", true)
-          else (updated :+ line, inSection)
-      }._1
-      inSection :+ s"    $key = \"$value\""
-    } else {
-      lines :+ s"[$sectionName]\n    $key = \"$value\""
-    }
-
-    val writer = new PrintWriter(file)
-    try {
-      updatedLines.foreach(writer.println)
-      println(s"Updated [$sectionName] in ${file.getAbsolutePath}")
-    } finally {
-      writer.close()
-    }
+    val lines = readFile(file)
+    val updatedLines = updateOrAppendSection(lines, sectionName, key, value)
+    writeToFile(file, updatedLines.mkString("\n"))
+    println(s"Updated [$sectionName] in ${file.getAbsolutePath}")
   }
+
+  private def updateOrAppendSection(lines: List[String], section: String, key: String, value: String): List[String] = {
+    val inSection = lines.foldLeft((List.empty[String], false)) {
+      case ((updated, inSection), line) =>
+        if (line.startsWith(s"[$section]")) (updated :+ line, true)
+        else if (inSection && line.startsWith("[") && !line.startsWith(s"[$section]")) (updated :+ s"    $key = \"$value\"", false)
+        else if (inSection && line.startsWith(s"    $key =")) (updated :+ s"    $key = \"$value\"", true)
+        else (updated :+ line, inSection)
+    }
+    if (!inSection._2) inSection._1 :+ s"[$section]\n    $key = \"$value\"" else inSection._1
+  }
+
   def viewConfig(file: File): Unit = {
-      if (file.exists()) {
-        println(s"Contents of ${file.getAbsolutePath}:")
-        Source.fromFile(file).getLines().foreach(println)
-      } else {
-        println(s"Config file not found: ${file.getAbsolutePath}")
-      }
+    if (file.exists()) {
+      println(s"Contents of ${file.getAbsolutePath}:")
+      readFile(file).foreach(println)
+    } else {
+      println(s"Config file not found: ${file.getAbsolutePath}")
+    }
   }
+
   def handleGlobalConfig(command: String, args: Array[String]): Unit = {
-    val globalConfigFile = new File(globalConfigFilePath)
+    val globalFile = new File(globalConfigFilePath)
 
     command match {
-      case "view" => viewConfig(globalConfigFile)
-      case "add" =>
-        if (args.length < 1) {
-          println("Usage: gitla config --global add <section-name>")
-        } else {
-          addSection(globalConfigFile, args(0))
-        }
-      case "update" =>
-        if (args.length < 3) {
-          println("Usage: gitla config --global update <section-name> <key> <value>")
-        } else {
-          updateSection(globalConfigFile, args(0), args(1), args(2))
-        }
-      case "create" => createGlobalConfig(new File(globalConfigFilePath))
+      case "view" => viewConfig(globalFile)
+      case "add" => validateArgs(args, 1) { addSection(globalFile, args(0)) }
+      case "update" => validateArgs(args, 3) { updateSection(globalFile, args(0), args(1), args(2)) }
+      case "create" => createGlobalConfig(globalFile)
       case _ => println(s"Unknown global config command: $command")
     }
   }
 
   def handleLocalConfig(repoDir: String, command: String, args: Array[String]): Unit = {
-    val localConfigFile = new File(s"$repoDir/config")
+    val localFile = new File(s"$repoDir/config")
 
     command match {
-      case "view" => viewConfig(localConfigFile)
-      case "add" =>
-        if (args.length < 1) {
-          println("Usage: gitla config --local add <section-name>")
-        } else {
-          addSection(localConfigFile, args(0))
-        }
-      case "update" =>
-        if (args.length < 3) {
-          println("Usage: gitla config --local update <section-name> <key> <value>")
-        } else {
-          updateSection(localConfigFile, args(0), args(1), args(2))
-        }
+      case "view" => viewConfig(localFile)
+      case "add" => validateArgs(args, 1) { addSection(localFile, args(0)) }
+      case "update" => validateArgs(args, 3) { updateSection(localFile, args(0), args(1), args(2)) }
       case _ => println(s"Unknown local config command: $command")
     }
+  }
+
+  private def validateArgs(args: Array[String], expected: Int)(action: => Unit): Unit = {
+    if (args.length < expected) println(s"Invalid number of arguments. Expected $expected.") else action
   }
 
   def showHelp(): Unit = {
@@ -190,10 +171,11 @@ object ConfigParser {
         |    update    Update a section in the local config
         |
         |Examples:
-        |  gitla config view --global
-        |  gitla config add user --local
-        |  gitla config update user name "RusLa"
+        |  gitla config --global view
+        |  gitla config --local add user
+        |  gitla config --global update user name "GitlaUser"
         |""".stripMargin
     )
   }
 }
+
