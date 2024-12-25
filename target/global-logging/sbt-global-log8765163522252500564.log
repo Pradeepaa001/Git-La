@@ -1,0 +1,6 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(run init tryRepo, Some(5919ce23-a879-4086-91db-3d982e01453a), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / run[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /home/lithikha/backup/gitla/target/scala-3.6.2/classes ...[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 5 s, completed Dec 25, 2024, 9:39:23 AM[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
