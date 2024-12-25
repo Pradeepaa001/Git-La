@@ -35,5 +35,8 @@ object Index {
     val updatedEntries = indexEntries - filePath
     writeIndex(updatedEntries)
   }
+  def isFileInIndex(filePath: String, indexEntries: Map[String, (String, String)]): Boolean = {
+    indexEntries.contains(filePath)
+  }
 
 }

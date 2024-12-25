@@ -1,6 +1,10 @@
-.bsp/
-.metals/
+Gitla/.bsp/
+Gitla/.metals/
 .vscode/
+Gitla/project/
+Gitla/target/
 project/
 target/
 Gitla/.gitla
+
+

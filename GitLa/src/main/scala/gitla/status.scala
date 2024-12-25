@@ -1,117 +1,76 @@
 package gitla
 
-import java.nio.file.{Files, Paths, Path}
-import java.security.MessageDigest
+import java.nio.file.{Files, Paths}
 import scala.jdk.CollectionConverters._
-import scala.collection.mutable
-import java.io.File
-import com.typesafe.config.{Config, ConfigFactory}
 
-object GitlaStatus {
+object Status {
 
-  // Locate .gitla directory
-  def findRepoRoot(startPath: Path): Option[Path] = {
-    var currentPath = startPath.toAbsolutePath
-    while (currentPath != null) {
-      if (Files.exists(currentPath.resolve(".gitla"))) {
-        return Some(currentPath)
-      }
-      currentPath = currentPath.getParent
-    }
-    None
-  }
+  def gitStatus(): Unit = {
+    val indexEntries = Index.readIndex()
+    val currentDir = Paths.get(".")
+    val untrackedFiles = scala.collection.mutable.ListBuffer[String]()
+    val changesToBeStaged = scala.collection.mutable.ListBuffer[String]()
+    val changesToBeCommitted = scala.collection.mutable.ListBuffer[String]()
+    //val deletedFiles = scala.collection.mutable.ListBuffer[String]()
 
-  def hashFile(filePath: Path): String = {
-    val content = Files.readAllBytes(filePath)
-    val digest = MessageDigest.getInstance("SHA-1")
-    digest.digest(content).map("%02x".format(_)).mkString
-  }
-
-  def parseIndex(repoDir: Path): Map[String, String] = {
-    val indexFile = repoDir.resolve(".gitla/index")
-    if (!Files.exists(indexFile)) return Map.empty
-    val config: Config = ConfigFactory.parseFile(indexFile.toFile)
-    val hashConfig = config.getConfig("hash")
-    hashConfig.entrySet().asScala.map { entry =>
-      val key = entry.getKey
-      val value = hashConfig.getString(key)
-      (key, value) // FilePath -> Hash
-    }.toMap
-  }
-
-  def getWorkingDirectoryFiles(repoDir: Path): List[String] = {
-    Files.walk(repoDir)
-      .filter(Files.isRegularFile(_))
-      .filter(file => !file.startsWith(repoDir.resolve(".gitla"))) // Ignore .gitla files
-      .map(repoDir.relativize(_).toString) // Make paths relative to repo
+    // Step 1: Find untracked files (files in the directory but not in the index)
+    Files.walk(currentDir)
+      .filter(path => Files.isRegularFile(path) && !path.startsWith(".gitla"))
       .iterator()
       .asScala
-      .toList
-  }
+      .foreach { filePath =>
+        val relativePath = currentDir.relativize(filePath).toString
+        if (!indexEntries.contains(relativePath)) {
+          untrackedFiles += s"\tnew file: $relativePath"
+        } else {
+          // Step 2: Files in index but modified or deleted
+          val (fileHash, state) = indexEntries(relativePath)
 
-  def status(): Unit = {
-    val repoRoot = findRepoRoot(Paths.get("."))
-    if (repoRoot.isEmpty) {
-      println("Error: No .gitla repository found in this directory or any parent directory.")
-      return
-    }
-
-    val repoDir = repoRoot.get
-    val indexEntries = parseIndex(repoDir)
-    val workingFiles = getWorkingDirectoryFiles(repoDir)
-    val untracked = mutable.ListBuffer[String]()
-    val toBeAdded = mutable.ListBuffer[String]()
-    val toBeCommitted = mutable.ListBuffer[String]()
-
-    // Check untracked files
-    for (file <- workingFiles) {
-      if (!indexEntries.contains(file)) {
-        untracked += file
+          if (Files.exists(filePath)) {
+            // File exists, check if the hash differs
+            val newHash = Blob.calculateHash(relativePath)
+            if (newHash != fileHash) {
+              changesToBeStaged += s"\tmodified: $relativePath"
+            }
+          }
+        }
+      }
+    indexEntries.foreach { case (filePath, (fileHash, state)) =>
+      if (Files.notExists(Paths.get(filePath))) {
+        changesToBeStaged += s"\tdeleted: $filePath"
       }
     }
 
-    // Check modified files
-    for ((file, oldHash) <- indexEntries) {
-      val filePath = repoDir.resolve(file)
-      if (workingFiles.contains(file)) {
-        val currentHash = hashFile(filePath)
-        if (currentHash != oldHash) {
-          toBeAdded += file
+    // Step 3: Files with state "A" or "M" in the index are ready to be committed
+    indexEntries.foreach { case (filePath, (fileHash, state)) =>
+       if (Files.exists(Paths.get(filePath))) {
+        // If the file exists, check its state
+        if (state == "A") {
+          changesToBeCommitted += s"\tnew file: $filePath"
+        }
+        if (state == "M") {
+          changesToBeCommitted += s"\tmodified: $filePath"
         }
       }
     }
 
-    // Check for changes to be committed
-    val blobDir = repoDir.resolve(".gitla/fileObject")
-    for ((file, hash) <- indexEntries) {
-      val blobFile = blobDir.resolve(hash)
-      if (!Files.exists(blobFile)) {
-        toBeCommitted += file
-      }
+    // Step 4: Output status
+    if (changesToBeCommitted.nonEmpty) {
+      println("Changes to be committed:")
+      changesToBeCommitted.foreach(println)
     }
+    if (changesToBeStaged.nonEmpty) {
+      println("Changes to be added:")
+      changesToBeStaged.foreach(println)    
+    }
+    if (untrackedFiles.nonEmpty) {
+      println("Untracked files:")
+      untrackedFiles.foreach(println)
+    } 
 
-    // Print results
-    println("Untracked files:")
-    if (untracked.nonEmpty) {      
-      untracked.foreach(file => println(s"\t$file"))
-    }else{
-      println("None")
-    }
-    println("Changes to be added:")
-    if (toBeAdded.nonEmpty) {
-      toBeAdded.foreach(file => println(s"\t$file"))
-    }else{
-      println("None")
-    }
-    println("Changes to be committed:")
-    if (toBeCommitted.nonEmpty) {      
-      toBeCommitted.foreach(file => println(s"\t$file"))
-    }else{
-      println("None")
-    }
-
-    if (untracked.isEmpty && toBeAdded.isEmpty && toBeCommitted.isEmpty) {
-      println("You have nothing to commit.")
+    if (!changesToBeCommitted.nonEmpty && !changesToBeStaged.nonEmpty && !untrackedFiles.nonEmpty) {
+      
+      println("You are free from Commitments")
     }
   }
 }

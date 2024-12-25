@@ -1,21 +1,19 @@
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E007] Type Mismatch Error: /home/pradee/optboot/class/lang/gitla/GitLa/src/main/scala/gitla/add.scala:19:25 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m19 |[0m        Index.writeIndex(updatedEntries)[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                         ^^^^^^^^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                        Found:    (updatedEntries : Map[String, String])[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                        Required: Map[String, (String, String)][0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /home/pradee/optboot/class/lang/gitla/GitLa/src/main/scala/gitla/add.scala:39:54 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m39 |[0m          Blob.createBlob(newHash, Files.readAllBytes(file))[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                                                      ^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                                                      Not found: file[0m
 [0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
 [0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E172] Type Error: /home/pradee/optboot/class/lang/gitla/GitLa/src/main/scala/gitla/index.scala:20:12 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m20 |[0m      .toMap[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m            ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m           Cannot prove that (String, (String, String)) <:< (String, V).[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /home/pradee/optboot/class/lang/gitla/GitLa/src/main/scala/gitla/add.scala:45:52 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m        Blob.createBlob(newHash, Files.readAllBytes(file))[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                                                    ^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                                                    Not found: file[0m
 [0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m           where:    V is a type variable with constraint <: String[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E007] Type Mismatch Error: /home/pradee/optboot/class/lang/gitla/GitLa/src/main/scala/gitla/index.scala:31:15 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m31 |[0m    writeIndex(updatedEntries)[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m               ^^^^^^^^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m     Found:    [1m[31m([0m[1m[31mupdatedEntries[0m[1m[31m [0m[1m[31m:[0m[1m[31m [0mMap[String, [1m[31mString[0m[1m[31m [0m[1m[31m|[0m[1m[31m [0m(String, String)][1m[31m)[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m     Required: Map[String, (String, String)][0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /home/pradee/optboot/class/lang/gitla/GitLa/src/main/scala/gitla/gitla.scala:58:10 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m58 |[0m          Commit.createCommit(message)[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m          ^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m          Not found: Commit - did you mean compat?[0m
 [0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
 [0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
 [0m[[0m[31merror[0m] [0m[0mthree errors found[0m

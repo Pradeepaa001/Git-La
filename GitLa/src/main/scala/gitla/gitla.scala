@@ -1,3 +1,4 @@
+package gitla
 object Gitla {
   def main(args: Array[String]): Unit = {
     if (args.isEmpty) {
@@ -44,19 +45,21 @@ object Gitla {
           }
         }
 
-      case "commit" =>
-        print("Hello, it is entering the case")
-        if (
-          commandArgs.isEmpty || commandArgs(
-            0
-          ) != "-m" || commandArgs.length < 2
-        ) {
-          println("Usage: gitla commit -m <message>")
-        } else {
-          val message = commandArgs(1)
-          Commit.createCommit(message)
-        }
-
+      // case "commit" =>
+      //   print("Hello, it is entering the case")
+      //   if (
+      //     commandArgs.isEmpty || commandArgs(
+      //       0
+      //     ) != "-m" || commandArgs.length < 2
+      //   ) {
+      //     println("Usage: gitla commit -m <message>")
+      //   } else {
+      //     val message = commandArgs(1)
+      //     Commit.createCommit(message)
+      //   }
+      case "status" =>
+        println("Running status command")
+        Status.gitStatus()
       case _ =>
         println(s"Unknown command: $command")
     }
