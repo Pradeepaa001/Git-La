@@ -57,6 +57,20 @@ object Gitla {
       //     val message = commandArgs(1)
       //     Commit.createCommit(message)
       //   }
+
+      case "rm" => 
+        if (commandArgs.isEmpty){
+          println("Usage: gitla rm <file-path> or gitla rm --cached <file-path>")
+        } else {
+            if (commandArgs.length == 2 && commandArgs(0) == "--cached") {
+              Remove.gitRemoveCached(commandArgs(1))
+              } else if (commandArgs.length == 1) {
+                Remove.gitRemove(commandArgs(0))
+              } else {
+                println("Invalid usage. Try: gitla rm <file-path> or gitla rm --cached <file-path>")
+              }
+          }
+
       case "status" =>
         println("Running status command")
         Status.gitStatus()
