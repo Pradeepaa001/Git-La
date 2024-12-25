@@ -15,3 +15,34 @@
 1734963692877:run add .
 1734963808689:run init tryRepo
 1734963835209:exit
+1735099758718:run init tryRepo
+1735100024387:run add ok.txt
+1735100036762:run add tryRepo/ok.txt
+1735100062856:run commit -m "Added Commit"
+1735100079367:run commit "Added commit"
+1735100138545:run commit -m "Added"
+1735100647727:run "commit -m Added"
+1735100712238:run "commit -m Added
+1735100766573:run "commit -m Added"
+1735100778154:run commit "-m Added"
+1735100922302:run commit "Workpls"
+1735100962643:runMain gitla.Gitla commit -m "Workpls"
+1735102782745:run add tryRepo/fine.txt
+1735102866433:run commit "Workpls"
+1735102919836:run status
+1735102948129:run commit "Workpls"
+1735103188473:sbt:Gitla> run commit -m "Added workfile"
+1735103204564:run commit -m "Added workfile"
+1735103951021:run "commit -m Added workfile"
+1735105221475:run "commit" "-m" "Added workfile"
+1735105663087:exit
+1735105730222:run "commit" "-m" "Added workfile"
+1735105737070:run "commit -m Added workfile"
+1735105747242:run commit -m "Added workfile"
+1735107311112:run add tryRepo/fine.txt
+1735108249145:run commit -m "Added workfile"
+1735108285807:run commit -m "Hello"
+1735108344273:exit
+1735108506197:run commit -m "ok"
+1735108558455:sbt "run commit -m \\"ok\\""
+1735108563274:exit

@@ -1,3 +1,4 @@
+/*
 import scala.collection.mutable.PriorityQueue
 import scala.collection.mutable
 
@@ -44,3 +45,4 @@ object huffman{
         println("Encoded String: " + encoded_str)
     }
 }
+*/
