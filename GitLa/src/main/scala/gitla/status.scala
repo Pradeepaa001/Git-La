@@ -15,7 +15,7 @@ object Status {
 
     // Step 1: Find untracked files (files in the directory but not in the index)
     Files.walk(currentDir)
-      .filter(path => Files.isRegularFile(path) && !path.startsWith(".gitla"))
+      .filter(path => Files.isRegularFile(path) && !path.toString.contains(".gitla"))
       .iterator()
       .asScala
       .foreach { filePath =>

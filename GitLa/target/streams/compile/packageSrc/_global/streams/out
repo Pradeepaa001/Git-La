@@ -1,0 +1,27 @@
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/gitla_3-0.1-sources.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/log.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/log.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/config_parser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/config_parser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/commit.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/commit.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/restore.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/restore.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/gitla.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/gitla.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/init.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/init.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/blob.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/blob.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/status.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/status.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/index.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/index.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/head.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/head.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/rm.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/rm.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/add.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

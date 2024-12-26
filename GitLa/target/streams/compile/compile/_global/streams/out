@@ -1,0 +1,5 @@
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/restore.scala:210:10 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m210 |[0m          [33mreturn[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m    |[0m          ^^^^^^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m    |[0mNon local returns are no longer supported; use `boundary` and `boundary.break` in `scala.util` instead[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

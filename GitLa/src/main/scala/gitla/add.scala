@@ -42,7 +42,7 @@ object Add {
   def gitAddAll(): Unit = {
     val currentDir = Paths.get(".")
     Files.walk(currentDir)
-      .filter(path => Files.isRegularFile(path) && !path.startsWith(".gitla"))
+      .filter(path => Files.isRegularFile(path) && !path.toString.contains(".gitla"))
       .iterator()
       .asScala
       .foreach { filePath =>

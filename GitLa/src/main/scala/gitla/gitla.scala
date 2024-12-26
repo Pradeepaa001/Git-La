@@ -65,13 +65,17 @@ object Gitla {
         println("Running log command")
         Log.displayLog()
       case "restore" =>
+        var commitHash: String = ""
         if (commandArgs.isEmpty) {
-          println("Usage: gitla restore <commit-hash> or gitla restore")
+          commitHash = Head.getPrevHash.getOrElse("")
         } else {
-          val commitHash = commandArgs.headOption
-          println("Running restore command")
-          Restore.restore(commitHash)
+          commitHash = commandArgs(0)
         }
+        if (commitHash.isEmpty) {
+            println("Commit hash is empty or invalid.")
+        }else{
+        println("Running restore command")
+        Restore.restore(commitHash)}
       case _ =>
         println(s"Unknown command: $command")
     }

@@ -1,0 +1,22 @@
+[0m[[0m[0minfo[0m] [0m[0mMain Scala API documentation to /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/api...[0m
+[0m[[0m[0mdebug[0m] [0m[0mReturning already retrieved and compiled bridge: /home/pradee/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.6.2/scala3-sbt-bridge-3.6.2.jar.[0m
+[0m[[0m[0mdebug[0m] [0m[0mCalling Dottydoc with arguments  (ScaladocInterface):[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-d[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/api[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-project[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Gitla[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.6.2/scala3-library_3-3.6.2.jar:/home/pradee/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2.jar:/home/pradee/.cache/coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Add.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Blob.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Commit.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/ConfigParser.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Gitla.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/GitlaApp.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Head.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Index.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Log.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Remove.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Restore.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Status.tasty[0m
+[0m[[0m[0minfo[0m] [0m[0mMain Scala API documentation successful.[0m

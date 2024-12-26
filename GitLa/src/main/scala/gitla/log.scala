@@ -32,7 +32,7 @@ object Log {
     }
   }
 
-  private def readCommit(commitHash: String): Option[(String, String, String, String)] = {
+  def readCommit(commitHash: String): Option[(String, String, String, String)] = {
     val repoPath = Paths.get(".gitla/commitObject")
     val subDir = commitHash.substring(0, 2)
     val fileName = commitHash.substring(2)
