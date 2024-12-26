@@ -1,3 +1,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mnot up to date. inChanged = true, force = false[0m
-[0m[[0m[0mdebug[0m] [0m[0mUpdating ProjectRef(uri("file:/home/lithikha/gitla/GitLa/project/"), "gitla-build")...[0m
-[0m[[0m[0mdebug[0m] [0m[0mDone updating ProjectRef(uri("file:/home/lithikha/gitla/GitLa/project/"), "gitla-build")[0m
+[0m[[0m[0mdebug[0m] [0m[0mUpdating ProjectRef(uri("file:/home/lithikha/backup/gitla/GitLa/project/"), "gitla-build")...[0m
+[0m[[0m[0minfo[0m] [0m[0mUpdating gitla-build[0m
+[0m[[0m[0minfo[0m] [0m[0mResolved gitla-build dependencies[0m
+[0m[[0m[0minfo[0m] [0m[0mFetching artifacts of gitla-build[0m
+[0m[[0m[0minfo[0m] [0m[0mFetched artifacts of gitla-build[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone updating ProjectRef(uri("file:/home/lithikha/backup/gitla/GitLa/project/"), "gitla-build")[0m

@@ -6,4 +6,7 @@ Gitla/target/
 project/
 target/
 Gitla/.gitla
-gitla/.metals
+.metals/
+huffman
+huffman.go
+huffman.scala
