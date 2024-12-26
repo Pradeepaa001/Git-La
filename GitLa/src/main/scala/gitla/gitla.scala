@@ -60,6 +60,9 @@ object Gitla {
       case "commit" =>
         println("Running commit command")
         Commit.createCommit(commandArgs(0))
+      case "log" =>
+        println("Running log command")
+        Log.displayLog()
       case _ =>
         println(s"Unknown command: $command")
     }
