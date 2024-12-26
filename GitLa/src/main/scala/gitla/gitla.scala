@@ -1,4 +1,5 @@
 package gitla
+
 object Gitla {
   def main(args: Array[String]): Unit = {
     if (args.isEmpty) {
@@ -48,12 +49,12 @@ object Gitla {
         } else {
             if (commandArgs.length == 2 && commandArgs(0) == "--cached") {
               Remove.gitRemoveCached(commandArgs(1))
-              } else if (commandArgs.length == 1) {
-                Remove.gitRemove(commandArgs(0))
-              } else {
-                println("Invalid usage. Try: gitla rm <file-path> or gitla rm --cached <file-path>")
-              }
-          }
+            } else if (commandArgs.length == 1) {
+              Remove.gitRemove(commandArgs(0))
+            } else {
+              println("Invalid usage. Try: gitla rm <file-path> or gitla rm --cached <file-path>")
+            }
+        }
       case "status" =>
         println("Running status command")
         Status.gitStatus()
@@ -63,6 +64,14 @@ object Gitla {
       case "log" =>
         println("Running log command")
         Log.displayLog()
+      case "restore" =>
+        if (commandArgs.isEmpty) {
+          println("Usage: gitla restore <commit-hash> or gitla restore")
+        } else {
+          val commitHash = commandArgs.headOption
+          println("Running restore command")
+          Restore.restore(commitHash)
+        }
       case _ =>
         println(s"Unknown command: $command")
     }

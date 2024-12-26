@@ -1,9 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E008] Not Found Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/log.scala:10:24 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m10 |[0m    [33mval[0m [36mheadHash[0m = Head.getCurrentHash()[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                   ^^^^^^^^^^^^^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m               value getCurrentHash is not a member of object gitla.Head[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E008] Not Found Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/log.scala:45:35 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m    [33mval[0m [36mdecompressedContent[0m = Blob.decompress(Files.readAllBytes(commitFilePath))[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                              ^^^^^^^^^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0mvalue decompress is not a member of object gitla.Blob - did you mean Blob.compress?[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
