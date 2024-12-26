@@ -1,5 +1,9 @@
 package gitla
 
+//
+//gitla rm example.txt
+//gitla rm --cached example.txt
+
 import java.nio.file.{Files, Paths}
 
 object Remove {
@@ -16,12 +20,9 @@ object Remove {
       println(s"Error: File $filePath is not tracked!")
       return
     }
-
-    // Remove file from index
     Index.removeFromIndex(filePath)
     println(s"Removed $filePath from index.")
 
-    // Delete the file from the working directory
     try {
       Files.delete(path)
       println(s"Deleted $filePath from working directory.")
@@ -39,7 +40,6 @@ object Remove {
       return
     }
 
-    // Remove file from index without deleting from the working directory
     Index.removeFromIndex(filePath)
     println(s"Removed $filePath from index (cached).")
   }

@@ -181,28 +181,18 @@
   <ul class="md-nav__list" data-md-scrollfix="">
         <li class="md-nav__item"><a href="#index--page-root" class="md-nav__link">Gitla’s Documentation</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#overview" class="md-nav__link">Overview</a>
-        </li>
         <li class="md-nav__item"><a href="#core-features" class="md-nav__link">Core Features</a>
+        </li>
+        <li class="md-nav__item"><a href="#advanced-features" class="md-nav__link">Advanced Features</a>
         </li>
         <li class="md-nav__item"><a href="#data-structures" class="md-nav__link">Data Structures</a>
         </li>
-        <li class="md-nav__item"><a href="#requirements" class="md-nav__link">Requirements</a>
+        <li class="md-nav__item"><a href="#function-documentation" class="md-nav__link">Function Documentation</a>
         </li>
-        <li class="md-nav__item"><a href="#installation" class="md-nav__link">Installation</a>
+        <li class="md-nav__item"><a href="#developer-notes" class="md-nav__link">Developer Notes</a>
         </li>
-        <li class="md-nav__item"><a href="#usage" class="md-nav__link">Usage</a>
+        <li class="md-nav__item"><a href="#building-and-running-gitla" class="md-nav__link">Building and Running Gitla</a>
         </li>
-        <li class="md-nav__item"><a href="#available-commands" class="md-nav__link">Available Commands</a>
-        </li>
-        <li class="md-nav__item"><a href="#configuration" class="md-nav__link">Configuration</a>
-        </li></ul>
-            </nav>
-        </li>
-        <li class="md-nav__item"><a href="#developer-documentation" class="md-nav__link">Developer Documentation</a>
-        </li>
-        <li class="md-nav__item"><a href="#building-and-running-gitla" class="md-nav__link">Building and Running Gitla</a><nav class="md-nav">
-              <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#license" class="md-nav__link">License</a>
         </li></ul>
             </nav>
@@ -225,145 +215,141 @@
 <h1 id="index--page-root">Gitla’s Documentation<a class="headerlink" href="#index--page-root" title="Link to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<section id="overview">
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>Gitla is a Git-like version control system implemented in Scala 3.x. It offers basic Git functionality such as repository initialization, file tracking, and configuration management, all with a minimal and extensible design.</p>
-<p>Gitla aims to simulate Git’s core features while providing an easy-to-understand, file-based architecture. The system focuses on performance, simplicity, and flexibility, allowing developers to extend and customize it as needed.</p>
-</section>
+<p>Gitla is a Git-like version control system implemented in Scala 3.x. It replicates essential Git features with simplicity and extensibility in mind, allowing developers to customize and extend functionality. The focus of Gitla is to provide:</p>
+<ul class="simple">
+<li><p><strong>Lightweight Version Control</strong>: A streamlined system for managing file changes.</p></li>
+<li><p><strong>Customization-Friendly Design</strong>: Modularity to facilitate extensions.</p></li>
+<li><p><strong>Learning-Oriented Features</strong>: A practical implementation of Git-like concepts.</p></li>
+</ul>
+<hr class="docutils"/>
 <section id="core-features">
 <h2 id="core-features">Core Features<a class="headerlink" href="#core-features" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><strong>Repository Initialization</strong>: Supports creating new Gitla repositories with required directory structures.</p></li>
-<li><p><strong>Configuration Management</strong>: Allows both global and local configuration for repositories.</p></li>
-<li><p><strong>File-Based Data Structures</strong>: Mimics Git’s use of files and directories to manage version control data.</p></li>
-</ul>
+<ol class="arabic simple">
+<li><p><strong>Repository Initialization</strong>
+- Creates a <cite>.gitla</cite> directory with the necessary structure to manage objects, configurations, and indexes.</p></li>
+<li><p><strong>Configuration Management</strong>
+- Supports both global (<cite>~/.gitlaconfig</cite>) and local (<cite>.gitla/config</cite>) configurations to manage settings.</p></li>
+<li><p><strong>Staging Area</strong>
+- Maintains an index file to track files staged for commits.</p></li>
+<li><p><strong>File Blob Management</strong>
+- Efficiently stores file data using content-based SHA-1 hashes and compression.</p></li>
+<li><p><strong>File Tracking and Removal</strong>
+- Provides commands for adding files to the staging area and removing them from tracking.</p></li>
+<li><p><strong>Status Tracking</strong>
+- Displays the repository’s status, including tracked, modified, and untracked files.</p></li>
+</ol>
 </section>
+<hr class="docutils"/>
+<section id="advanced-features">
+<h2 id="advanced-features">Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>SHA-1 Hashing</strong>
+- Gitla stores file content as blobs identified by SHA-1 hashes, ensuring efficient deduplication and content integrity.</p></li>
+<li><p><strong>Compression</strong>
+- Files are compressed before being stored, optimizing disk usage while retaining functionality.</p></li>
+<li><p><strong>Error Handling</strong>
+- Detailed error messages and edge-case handling ensure robustness.</p></li>
+<li><p><strong>Modular Design</strong>
+- Gitla’s architecture is scalable, allowing easy addition of features like commit history or branching.</p></li>
+</ol>
+</section>
+<hr class="docutils"/>
 <section id="data-structures">
 <h2 id="data-structures">Data Structures<a class="headerlink" href="#data-structures" title="Link to this heading">¶</a></h2>
-<p>Gitla uses several key data structures to manage repositories and configurations:</p>
+<ol class="arabic">
+<li><p><strong>File and Directory Structure</strong>
+- <cite>.gitla/</cite> includes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>objects/</strong>: Stores file blobs.</p></li>
+<li><p><strong>indexObject/</strong>: Maintains the staging area.</p></li>
+<li><p><strong>config/</strong>: Holds configuration files.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Maps for Configuration and Indexing</strong>
+- Configuration files use <cite>Map[String, String]</cite>, serialized into TOML format.
+- Index entries use <cite>Map[String, (String, String)]</cite>, representing <cite>filePath -&gt; (hash, status)</cite>.</p></li>
+<li><p><strong>Recursive Utilities</strong>
+- Handles nested files and directories for operations like staging all files.</p></li>
+</ol>
+</section>
+<hr class="docutils"/>
+<section id="function-documentation">
+<h2 id="function-documentation">Function Documentation<a class="headerlink" href="#function-documentation" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
-<li><p><strong>File and Directory Structure</strong>:
-- Represents the <cite>.gitla</cite> directory and its subdirectories, such as <cite>objects</cite>, <cite>indexObject</cite>, and <cite>fileObject</cite>.
-- Mimics Git’s structure for repository management.</p></li>
-<li><p><strong>Maps</strong>:
-- Used for managing configuration data, such as storing properties like <cite>repositoryformatversion</cite> and <cite>bare</cite>.
-- <cite>Map[String, String]</cite> is used to handle configuration settings and can easily serialize into configuration files.</p></li>
-<li><p><strong>Recursive Functions</strong>:
-- For tasks like directory deletion, recursive functions ensure proper cleanup of nested files and directories within the <cite>.gitla</cite> folder.</p></li>
-<li><p><strong>Streams and Strings</strong>:
-- Used for reading from and writing to files, such as the <cite>HEAD</cite> file and configuration files, leveraging <cite>PrintWriter</cite> and <cite>Source</cite> from Scala’s standard library.</p></li>
-</ol>
-</section>
-<section id="requirements">
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
-<p>To run Gitla, the following software is required:</p>
+<li><p><strong>Add.scala</strong></p>
 <ul class="simple">
-<li><p><strong>Scala</strong>: Version 3.x</p></li>
-<li><p><strong>sbt</strong>: Version 1.x</p></li>
-<li><p><strong>Java</strong>: Version 11 or later</p></li>
+<li><p><strong>`gitAdd(filePath: String)`</strong>
+Adds a file to the staging area. Updates the blob if modified or removes it if missing.</p></li>
+<li><p><strong>`gitAddAll()`</strong>
+Stages all files in the current directory except <cite>.gitla</cite>.</p></li>
 </ul>
-</section>
-<section id="installation">
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
-<p>To install and run Gitla, follow these steps:</p>
-<ol class="arabic">
-<li><p><strong>Clone the Repository</strong>:
-Clone the Gitla repository to your local machine:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>git clone <a class="reference external" href="https://gitlab.com/rusla/gitla.git">https://gitlab.com/rusla/gitla.git</a></p>
-</div></blockquote>
 </li>
-<li><p><strong>Navigate to the Project Directory</strong>:
-Change to the directory where you cloned Gitla:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>cd gitla</p>
-</div></blockquote>
+<li><p><strong>Blob.scala</strong></p>
+<ul class="simple">
+<li><p><strong>`calculateHash(filePath: String): String`</strong>
+Computes the SHA-1 hash for file deduplication.</p></li>
+<li><p><strong>`createBlob(hash: String, fileContent: Array[Byte])`</strong>
+Compresses and saves file blobs in <cite>.gitla/objects</cite>.</p></li>
+</ul>
 </li>
-<li><p><strong>Run the Project</strong>:
-Use sbt to run the project:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>sbt run</p>
-</div></blockquote>
+<li><p><strong>Init.scala</strong></p>
+<ul class="simple">
+<li><p><strong>`initRepository(repoName: Option[String])`</strong>
+Initializes a new repository, setting up the <cite>.gitla</cite> structure and default configurations.</p></li>
+</ul>
+</li>
+<li><p><strong>Config.scala</strong></p>
+<ul class="simple">
+<li><p><strong>`readConfig(path: String): Map[String, String]`</strong>
+Reads a configuration file into a Scala map.</p></li>
+<li><p><strong>`writeConfig(path: String, data: Map[String, String])`</strong>
+Writes configuration data from a map into TOML format.</p></li>
+</ul>
 </li>
 </ol>
 </section>
-<section id="usage">
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
-<p>To initialize a new Gitla repository, use the following command:</p>
-<p>Replace <cite>&lt;repo-name&gt;</cite> with the name you wish to assign to the repository. If no repository name is provided, Gitla will use the current directory as the repository name.</p>
+<hr class="docutils"/>
+<section id="developer-notes">
+<h2 id="developer-notes">Developer Notes<a class="headerlink" href="#developer-notes" title="Link to this heading">¶</a></h2>
+<p>Extending Gitla
+- Familiarize yourself with Scala’s file I/O and library functions.
+- Follow Gitla’s modular structure for easier implementation of new features.
+- Write and run unit tests for all contributions using <cite>sbt test</cite>.</p>
 </section>
-<section id="available-commands">
-<h2 id="available-commands">Available Commands<a class="headerlink" href="#available-commands" title="Link to this heading">¶</a></h2>
-<p>Gitla supports several commands:</p>
-<ul class="simple">
-<li><p><strong>init</strong>: Initializes a new Gitla repository.
-- Usage: <cite>gitla init &lt;repo-name&gt;</cite>
-- This will create the necessary directory structure and configuration files for the repository.</p></li>
-</ul>
-</section>
-<section id="configuration">
-<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
-<p>Gitla supports both global and local configuration files to manage user and repository-specific settings:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><strong>Global Configuration</strong>:</dt><dd><ul>
-<li><p>Stored in the user’s home directory (<cite>~/.gitlaconfig</cite>).</p></li>
-<li><p>Contains user-specific information, such as name and email, which is used across all repositories.</p></li>
-<li><p>If the global configuration file does not exist, Gitla will prompt you to create one when initializing a repository.</p></li>
-<li><p>Ensures consistency of user information across all repositories managed by Gitla.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><strong>Local Configuration</strong>:</dt><dd><ul>
-<li><p>Stored within the <cite>.gitla</cite> folder of each repository.</p></li>
-<li><p>Contains repository-specific settings, such as the repository name and user information.</p></li>
-<li><p>These settings can be updated manually or through Gitla’s CLI commands.</p></li>
-<li><p>Allows each repository to have its own settings, while still using the global configuration for user details like name and email.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</section>
-</section>
-<section id="developer-documentation">
-<h1 id="developer-documentation">Developer Documentation<a class="headerlink" href="#developer-documentation" title="Link to this heading">¶</a></h1>
-<p>To contribute to Gitla or extend its functionality, understanding the core components of the codebase is essential. The following components are the key building blocks of Gitla:</p>
-<ul class="simple">
-<li><p><strong>GitlaApp</strong>: Contains the main application logic for handling commands such as <cite>init</cite> and creating the repository structure.</p></li>
-<li><p><strong>ConfigParser</strong>: Manages the reading, writing, and updating of configuration files.</p></li>
-<li><p><strong>Gitla</strong>: The entry point for the application, responsible for parsing command-line arguments and invoking the appropriate actions.</p></li>
-</ul>
-</section>
+<hr class="docutils"/>
 <section id="building-and-running-gitla">
-<h1 id="building-and-running-gitla">Building and Running Gitla<a class="headerlink" href="#building-and-running-gitla" title="Link to this heading">¶</a></h1>
-<p>Follow these steps to build and run Gitla locally:</p>
+<h2 id="building-and-running-gitla">Building and Running Gitla<a class="headerlink" href="#building-and-running-gitla" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
-<li><p><strong>Clone the repository</strong>:
-.. code-block:: bash</p>
+<li><p><strong>Step 1: Clone the Repository</strong>
+- Run the following command to clone the repository:</p>
 <blockquote>
-<div><p>git clone <a class="reference external" href="https://github.com/yourusername/gitla.git">https://github.com/yourusername/gitla.git</a></p>
+<div><p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://gitlab.com/rusla/gitla.git</span>
+<span class="pre">`</span></code></p>
 </div></blockquote>
 </li>
-<li><p><strong>Compile the project</strong>:
-.. code-block:: bash</p>
+<li><p><strong>Step 2: Compile the Project</strong>
+- To compile the project, run:</p>
 <blockquote>
-<div><p>sbt compile</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">sbt</span> <span class="pre">compile</span>
+<span class="pre">`</span></code></p>
 </div></blockquote>
 </li>
-<li><p><strong>Run the project</strong>:
-.. code-block:: bash</p>
+<li><p><strong>Step 3: Run the Project</strong>
+- To run the project, execute:</p>
 <blockquote>
-<div><p>sbt run</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">sbt</span> <span class="pre">run</span>
+<span class="pre">`</span></code></p>
 </div></blockquote>
 </li>
 </ol>
-<p>For more detailed information on building, testing, and contributing, please refer to the specific module documentation.</p>
+<p>For detailed instructions, refer to specific sections in this documentation.</p>
+</section>
+<hr class="docutils"/>
 <section id="license">
 <h2 id="license">License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
 <p>This project is licensed under the MIT License. See <cite>LICENSE</cite> for more details.</p>

@@ -1,5 +1,5 @@
 Gitla's Documentation
-====================
+===================
 
 .. toctree::
    :maxdepth: 2
@@ -10,125 +10,149 @@ Gitla's Documentation
    usage
    configuration
    developer
+   functions
+   advanced_features
+   data_structures
 
-Overview
---------
-Gitla is a Git-like version control system implemented in Scala 3.x. It offers basic Git functionality such as repository initialization, file tracking, and configuration management, all with a minimal and extensible design.
+Gitla is a Git-like version control system implemented in Scala 3.x. It replicates essential Git features with simplicity and extensibility in mind, allowing developers to customize and extend functionality. The focus of Gitla is to provide:
 
-Gitla aims to simulate Git's core features while providing an easy-to-understand, file-based architecture. The system focuses on performance, simplicity, and flexibility, allowing developers to extend and customize it as needed.
+- **Lightweight Version Control**: A streamlined system for managing file changes.
+- **Customization-Friendly Design**: Modularity to facilitate extensions.
+- **Learning-Oriented Features**: A practical implementation of Git-like concepts.
+
+----------
 
 Core Features
--------------
-- **Repository Initialization**: Supports creating new Gitla repositories with required directory structures.
-- **Configuration Management**: Allows both global and local configuration for repositories.
-- **File-Based Data Structures**: Mimics Git's use of files and directories to manage version control data.
+--------------
+
+1. **Repository Initialization**
+   - Creates a `.gitla` directory with the necessary structure to manage objects, configurations, and indexes.
+
+2. **Configuration Management**
+   - Supports both global (`~/.gitlaconfig`) and local (`.gitla/config`) configurations to manage settings.
+
+3. **Staging Area**
+   - Maintains an index file to track files staged for commits.
+
+4. **File Blob Management**
+   - Efficiently stores file data using content-based SHA-1 hashes and compression.
+
+5. **File Tracking and Removal**
+   - Provides commands for adding files to the staging area and removing them from tracking.
+
+6. **Status Tracking**
+   - Displays the repository's status, including tracked, modified, and untracked files.
+
+----------
+
+Advanced Features
+-----------------
+
+1. **SHA-1 Hashing**
+   - Gitla stores file content as blobs identified by SHA-1 hashes, ensuring efficient deduplication and content integrity.
+
+2. **Compression**
+   - Files are compressed before being stored, optimizing disk usage while retaining functionality.
+
+3. **Error Handling**
+   - Detailed error messages and edge-case handling ensure robustness.
+
+4. **Modular Design**
+   - Gitla's architecture is scalable, allowing easy addition of features like commit history or branching.
+
+----------
 
 Data Structures
 ---------------
-Gitla uses several key data structures to manage repositories and configurations:
 
-1. **File and Directory Structure**:
-   - Represents the `.gitla` directory and its subdirectories, such as `objects`, `indexObject`, and `fileObject`.
-   - Mimics Git's structure for repository management.
+1. **File and Directory Structure**
+   - `.gitla/` includes:
+     - **objects/**: Stores file blobs.
+     - **indexObject/**: Maintains the staging area.
+     - **config/**: Holds configuration files.
 
-2. **Maps**:
-   - Used for managing configuration data, such as storing properties like `repositoryformatversion` and `bare`.
-   - `Map[String, String]` is used to handle configuration settings and can easily serialize into configuration files.
+2. **Maps for Configuration and Indexing**
+   - Configuration files use `Map[String, String]`, serialized into TOML format.
+   - Index entries use `Map[String, (String, String)]`, representing `filePath -> (hash, status)`.
 
-3. **Recursive Functions**:
-   - For tasks like directory deletion, recursive functions ensure proper cleanup of nested files and directories within the `.gitla` folder.
+3. **Recursive Utilities**
+   - Handles nested files and directories for operations like staging all files.
 
-4. **Streams and Strings**:
-   - Used for reading from and writing to files, such as the `HEAD` file and configuration files, leveraging `PrintWriter` and `Source` from Scala’s standard library.
+----------
 
-Requirements
-------------
-To run Gitla, the following software is required:
+Function Documentation
+----------------------
 
-- **Scala**: Version 3.x
-- **sbt**: Version 1.x
-- **Java**: Version 11 or later
+1. **Add.scala**
 
-Installation
-------------
-To install and run Gitla, follow these steps:
+   - **`gitAdd(filePath: String)`**  
+     Adds a file to the staging area. Updates the blob if modified or removes it if missing.
 
-1. **Clone the Repository**:
-   Clone the Gitla repository to your local machine:
-   .. code-block:: bash
-      git clone https://gitlab.com/rusla/gitla.git
+   - **`gitAddAll()`**  
+     Stages all files in the current directory except `.gitla`.
 
-2. **Navigate to the Project Directory**:
-   Change to the directory where you cloned Gitla:
-   .. code-block:: bash
-      cd gitla
+2. **Blob.scala**
 
-3. **Run the Project**:
-   Use sbt to run the project:
-   .. code-block:: bash
-      sbt run
+   - **`calculateHash(filePath: String): String`**  
+     Computes the SHA-1 hash for file deduplication.
 
-Usage
------
-To initialize a new Gitla repository, use the following command:
+   - **`createBlob(hash: String, fileContent: Array[Byte])`**  
+     Compresses and saves file blobs in `.gitla/objects`.
 
-.. code-block:: bash
-   sbt run init <repo-name>
+3. **Init.scala**
 
-Replace `<repo-name>` with the name you wish to assign to the repository. If no repository name is provided, Gitla will use the current directory as the repository name.
+   - **`initRepository(repoName: Option[String])`**  
+     Initializes a new repository, setting up the `.gitla` structure and default configurations.
 
-Available Commands
-------------------
-Gitla supports several commands:
+4. **Config.scala**
 
-- **init**: Initializes a new Gitla repository.
-  - Usage: `gitla init <repo-name>`
-  - This will create the necessary directory structure and configuration files for the repository.
+   - **`readConfig(path: String): Map[String, String]`**  
+     Reads a configuration file into a Scala map.
 
-Configuration
--------------
+   - **`writeConfig(path: String, data: Map[String, String])`**  
+     Writes configuration data from a map into TOML format.
 
-Gitla supports both global and local configuration files to manage user and repository-specific settings:
+----------
 
-- **Global Configuration**:  
-   - Stored in the user's home directory (`~/.gitlaconfig`).  
-   - Contains user-specific information, such as name and email, which is used across all repositories.  
-   - If the global configuration file does not exist, Gitla will prompt you to create one when initializing a repository.  
-   - Ensures consistency of user information across all repositories managed by Gitla.
+Developer Notes
+---------------
 
-- **Local Configuration**:  
-   - Stored within the `.gitla` folder of each repository.  
-   - Contains repository-specific settings, such as the repository name and user information.  
-   - These settings can be updated manually or through Gitla's CLI commands.  
-   - Allows each repository to have its own settings, while still using the global configuration for user details like name and email.
-   
-Developer Documentation
-=======================
-To contribute to Gitla or extend its functionality, understanding the core components of the codebase is essential. The following components are the key building blocks of Gitla:
+Extending Gitla
+- Familiarize yourself with Scala’s file I/O and library functions.
+- Follow Gitla’s modular structure for easier implementation of new features.
+- Write and run unit tests for all contributions using `sbt test`.
 
-- **GitlaApp**: Contains the main application logic for handling commands such as `init` and creating the repository structure.
-- **ConfigParser**: Manages the reading, writing, and updating of configuration files.
-- **Gitla**: The entry point for the application, responsible for parsing command-line arguments and invoking the appropriate actions.
+----------
 
 Building and Running Gitla
-==========================
+--------------------------
 
-Follow these steps to build and run Gitla locally:
+1. **Step 1: Clone the Repository**
+   - Run the following command to clone the repository:
 
-1. **Clone the repository**:
-   .. code-block:: bash
-      git clone https://github.com/yourusername/gitla.git
+     ```
+     git clone https://gitlab.com/rusla/gitla.git
+     ```
 
-2. **Compile the project**:
-   .. code-block:: bash
-      sbt compile
+2. **Step 2: Compile the Project**
+   - To compile the project, run:
 
-3. **Run the project**:
-   .. code-block:: bash
-      sbt run
+     ```
+     sbt compile
+     ```
 
-For more detailed information on building, testing, and contributing, please refer to the specific module documentation.
+3. **Step 3: Run the Project**
+   - To run the project, execute:
+
+     ```
+     sbt run
+     ```
+
+For detailed instructions, refer to specific sections in this documentation.
+
+----------
 
 License
 -------
+
 This project is licensed under the MIT License. See `LICENSE` for more details.
