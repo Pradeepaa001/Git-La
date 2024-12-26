@@ -1,102 +1,48 @@
-// package gitla
+package gitla
 
-// import java.nio.file.{Files, Paths, StandardOpenOption}
-// import java.nio.charset.StandardCharsets
-// import java.security.MessageDigest
-// import scala.collection.JavaConverters._
+import java.nio.file.{Files, Paths}
+import java.time.Instant
+import java.security.MessageDigest
+import java.time.{Instant, ZoneId, ZonedDateTime}
+import java.time.format.DateTimeFormatter
 
-// object Commit {
+object Commit {
 
-//   val commitObjectsPath = Paths.get(".gitla/commitObject")
-//   val indexPath = Paths.get(".gitla/index.toml")
+  def createCommit(message: String): Unit = {
+    val indexEntries = Index.readIndex()
 
-//   case class CommitNode(
-//     commitHash: String,
-//     message: String,
-//     prevCommit: Option[CommitNode],
-//     nextCommit: Option[CommitNode]
-//   )
+    // Step 1: Check if a commit is needed
+    if (!needCommit(indexEntries)) {
+      println("You have no new commitments.")
+      return
+    }
 
-//   var head: Option[CommitNode] = None
+    // Step 2: Update all entries to state `C`
+    val updatedIndex = indexEntries.map { case (filePath, (hash, _)) => filePath -> (hash, "C") }
+    Index.writeIndex(updatedIndex)
 
-//   def createCommit(message: String): Unit = {
-//     if (!Files.exists(indexPath)) {
-//       println("No files staged for commit. Use 'gitla add' to stage files.")
-//       return
-//     }
+    // Step 3: Create a hash for the index file
+    val indexPath = Paths.get(".gitla/index")
+    val indexHash = Blob.calculateHash(indexPath.toString)
+    val indexContent = Files.readAllBytes(indexPath)
+    Blob.createBlob(indexHash, indexContent, "indexObject")
 
-//     val indexEntries = Files.readAllLines(indexPath, StandardCharsets.UTF_8).asScala
-//     val fileHashes = indexEntries.drop(1).map { line =>
-//       val parts = line.split("=", 2)
-//       if (parts.length == 2) parts(0).trim -> parts(1).trim.stripPrefix("\"").stripSuffix("\"") else "" -> ""
-//     }.filter(_._1.nonEmpty).toMap
+    // Step 4: Create the commit object
+    val prevHash = Head.getPrevHash.getOrElse("")
+    val timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    .format(ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()))
+    val commitContent = s"Previous Commit: $prevHash\nCommit Message: $message\nTime: $timestamp\nContent: $indexHash"
+    val commitHash = Blob.calculateCommitHash(commitContent)
+    Blob.createBlob(commitHash, commitContent.getBytes("UTF-8"), "commitObject")
 
-//     if (fileHashes.isEmpty) {
-//       println("No files staged for commit.")
-//       return
-//     }
+    // Step 5: Update the head file with the new commit hash
+    Head.updateCurrHash(commitHash)
 
-//     val indexHash = fileHashes.map { case (file, hash) => s"$file=$hash" }.mkString("\n")
-//     val currentIndexHash = hashString(indexHash)
+    println(s"Commit created with hash: $commitHash")
+  }
 
-//     val commitContent = CommitNode(commitHash = "temp-hash", message, prevCommit = head, nextCommit = None)
+  private def needCommit(indexEntries: Map[String, (String, String)]): Boolean = {
+    indexEntries.values.exists { case (_, state) => state == "A" || state == "M" }
+  }
 
-//     val commitHash = hashString(commitContent.toString)
-
-//     val finalCommitContent = commitContent.copy(commitHash = commitHash)
-
-//     saveCommitBlob(commitHash, finalCommitContent)
-
-//     head = Some(finalCommitContent)
-
-//     updateCommitHistory(commitHash)
-
-//     println(s"Commit created with hash: $commitHash")
-//   }
-
-//   private def saveCommitBlob(hash: String, commitContent: CommitNode): Unit = {
-//     val subDir = hash.substring(0, 2)
-//     val commitFileName = hash.substring(2)
-//     val subDirPath = commitObjectsPath.resolve(subDir)
-//     val commitFilePath = subDirPath.resolve(commitFileName)
-
-//     if (!Files.exists(subDirPath)) {
-//       Files.createDirectories(subDirPath)
-//     }
-
-//     val commitBlobContent = s"Message: ${commitContent.message}\nPrevCommitHash: ${commitContent.prevCommit.map(_.commitHash).getOrElse("None")}\n"
-//     Files.write(
-//       commitFilePath,
-//       commitBlobContent.getBytes(StandardCharsets.UTF_8),
-//       StandardOpenOption.CREATE,
-//       StandardOpenOption.TRUNCATE_EXISTING
-//     )
-
-//     println(s"Commit blob saved at: $commitFilePath")
-//   }
-
-//   private def updateCommitHistory(commitHash: String): Unit = {
-//     val headFilePath = Paths.get(".gitla/commitHistory")
-//     Files.write(
-//       headFilePath,
-//       commitHash.getBytes(StandardCharsets.UTF_8),
-//       StandardOpenOption.CREATE,
-//       StandardOpenOption.TRUNCATE_EXISTING
-//     )
-//   }
-
-//   private def hashString(data: String): String = {
-//     val digest = MessageDigest.getInstance("SHA-1")
-//     val bytes = digest.digest(data.getBytes(StandardCharsets.UTF_8))
-//     bytes.map("%02x".format(_)).mkString
-//   }
-
-//   def traverseCommits(): Unit = {
-//     var currentCommit = head
-//     while (currentCommit.isDefined) {
-//       val commit = currentCommit.get
-//       println(s"Commit Hash: ${commit.commitHash}, Message: ${commit.message}")
-//       currentCommit = commit.prevCommit
-//     }
-//   }
-// }
+}

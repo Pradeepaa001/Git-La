@@ -1,0 +1,58 @@
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E040] Syntax Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:11:6 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m11 |[0m  [33mdef[0m [33mpackage[0m gitla[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m      ^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m      an identifier expected, but 'package' found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:64:31 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m64 |[0mgitAdd(filePath: [35mString[0m): [35mUnit[0m = {[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                               ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                               end of statement expected but '=' found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:64:0 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m64 |[0mgitAdd(filePath: [35mString[0m): [35mUnit[0m = {[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0mNot found: gitAdd - did you mean gitAddAll?[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:64:7 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m64 |[0mgitAdd(filePath: [35mString[0m): [35mUnit[0m = {[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m       ^^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m       Not found: filePath[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:111:8 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m111 |[0m        gitAdd(relativePath) [34m// Directly reuse the `gitAdd` function[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m        ^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m        Not found: gitAdd - did you mean gitAddAll?[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:13:0 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m13 |[0m[33mimport[0m java.nio.file.{Files, Paths, StandardOpenOption}[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m   |[0m^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m   |[0mLine is indented too far to the left, or a `}` is missing[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:14:0 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m14 |[0m[33mimport[0m java.security.MessageDigest[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m   |[0m^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m   |[0mLine is indented too far to the left, or a `}` is missing[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:15:0 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m15 |[0m[33mimport[0m java.io.ByteArrayOutputStream[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m   |[0m^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m   |[0mLine is indented too far to the left, or a `}` is missing[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:16:0 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m16 |[0m[33mimport[0m java.util.zip.{Deflater, DeflaterOutputStream}[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m   |[0m^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m   |[0mLine is indented too far to the left, or a `}` is missing[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:17:0 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m17 |[0m[33mimport[0m scala.jdk.CollectionConverters._[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m   |[0m^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m   |[0mLine is indented too far to the left, or a `}` is missing[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- Warning: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/add.scala:19:0 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m19 |[0m[33mobject[0m [35mAdd[0m {[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m   |[0m^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m   |[0mLine is indented too far to the left, or a `}` is missing[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E008] Not Found Error: /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/gitla.scala:22:14 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m22 |[0m          Add.gitAdd(commandArgs([31m0[0m))[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m          ^^^^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0mvalue gitAdd is not a member of object gitla.Add - did you mean Add.gitAddAll?[0m
+[0m[[0m[33mwarn[0m] [0m[0m6 warnings found[0m
+[0m[[0m[31merror[0m] [0m[0m6 errors found[0m

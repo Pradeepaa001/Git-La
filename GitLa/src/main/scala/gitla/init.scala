@@ -23,17 +23,18 @@ object GitlaApp {
   def createRepoStructure(repoDir: String, gitlaDir: File): Unit = {
     new File(repoDir).mkdirs()
     gitlaDir.mkdir()
-    createFile(s"$repoDir/.gitla/HEAD", "ref: refs/heads/main")
+    createFile(s"$repoDir/.gitla/head")
     createDir(s"$repoDir/.gitla/indexObject")
     createDir(s"$repoDir/.gitla/fileObject")
-    createFile(s"$repoDir/.gitla/index", "")
+    createDir(s"$repoDir/.gitla/commitObject")
+    createFile(s"$repoDir/.gitla/index")
   }
 
-  def createFile(filePath: String, content: String): Unit = {
+  def createFile(filePath: String): Unit = {
     val file = new File(filePath)
     val writer = new PrintWriter(file)
     try {
-      writer.println(content)
+      writer.print("")
     } finally {
       writer.close()
     }

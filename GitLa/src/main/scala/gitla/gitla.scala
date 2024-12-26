@@ -15,7 +15,6 @@ object Gitla {
       case "init" =>
         println("Running init command")
         GitlaApp.gitInit(commandArgs.headOption)
-
       case "add" =>
         if (commandArgs.length == 1 && commandArgs(0) == ".") {
           Add.gitAddAll()
@@ -24,7 +23,6 @@ object Gitla {
         } else {
           println("Usage: gitla add <file-path> or gitla add .")
         }
-
       case "config" =>
         if (commandArgs.isEmpty) {
           ConfigParser.showHelp()
@@ -44,20 +42,6 @@ object Gitla {
             ConfigParser.handleLocalConfig(repoDir, localCommand, localArgs)
           }
         }
-
-      // case "commit" =>
-      //   print("Hello, it is entering the case")
-      //   if (
-      //     commandArgs.isEmpty || commandArgs(
-      //       0
-      //     ) != "-m" || commandArgs.length < 2
-      //   ) {
-      //     println("Usage: gitla commit -m <message>")
-      //   } else {
-      //     val message = commandArgs(1)
-      //     Commit.createCommit(message)
-      //   }
-
       case "rm" => 
         if (commandArgs.isEmpty){
           println("Usage: gitla rm <file-path> or gitla rm --cached <file-path>")
@@ -70,10 +54,12 @@ object Gitla {
                 println("Invalid usage. Try: gitla rm <file-path> or gitla rm --cached <file-path>")
               }
           }
-
       case "status" =>
         println("Running status command")
         Status.gitStatus()
+      case "commit" =>
+        println("Running commit command")
+        Commit.createCommit(commandArgs(0))
       case _ =>
         println(s"Unknown command: $command")
     }
