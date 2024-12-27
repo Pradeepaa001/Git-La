@@ -3,7 +3,7 @@ package gitla
 object Gitla {
   def main(args: Array[String]): Unit = {
     if (args.isEmpty) {
-      println("No command provided!")
+      Messages.printMsg("No command provided!")
       return
     }
 
@@ -65,7 +65,7 @@ object Gitla {
       case "jumpto" =>
         var commitHash: String = ""
         if (commandArgs.isEmpty) {
-          commitHash = Head.getPrevHash.getOrElse("")
+          commitHash = Utils.getPrevCommit.getOrElse("")
         } else {
           commitHash = commandArgs(0)
         }

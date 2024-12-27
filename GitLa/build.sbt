@@ -12,7 +12,6 @@ enablePlugins(AssemblyPlugin, JavaAppPackaging)
 
 lazy val root = (project in file("."))
   .settings(
-    mainClass in Compile:= Some("gitla.Gitla"),
     assembly / mainClass := Some("gitla.Gitla"),
     assembly / assemblyJarName := "gitla.jar",
     assembly / assemblyMergeStrategy := {

@@ -6,7 +6,7 @@ import scala.jdk.CollectionConverters._
 object Status {
 
   def gitStatus(): Unit = {
-    val indexEntries = Index.readIndex()
+    val indexEntries = Utils.readIndex()
     val currentDir = Paths.get(".")
     val untrackedFiles = scala.collection.mutable.ListBuffer[String]()
     val changesToBeStaged = scala.collection.mutable.ListBuffer[String]()
@@ -24,7 +24,7 @@ object Status {
           val (fileHash, state) = indexEntries(relativePath)
 
           if (Files.exists(filePath)) {
-            val newHash = Blob.calculateHash(relativePath)
+            val newHash = Utils.calculateHash(relativePath)
             if (newHash != fileHash) {
               changesToBeStaged += s"\tmodified: $relativePath"
             }

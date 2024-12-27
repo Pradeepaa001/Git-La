@@ -5,7 +5,7 @@ import java.nio.file.{Files, Paths}
 object Remove {
   def gitRemove(filePath: String): Unit = {
     val path = Paths.get(filePath)
-    val indexEntries = Index.readIndex()
+    val indexEntries = Utils.readIndex()
 
     if (Files.notExists(path)) {
       Messages.raiseError(s"Error: File $filePath does not exist!")
@@ -16,7 +16,7 @@ object Remove {
       Messages.raiseError(s"Error: File $filePath is not tracked!")
       return
     }
-    Index.removeFromIndex(filePath)
+    Utils.removeFromIndex(filePath)
     Messages.printMsg(s"Removed $filePath from index.")
 
     try {
@@ -29,14 +29,14 @@ object Remove {
   }
 
   def gitRemoveCached(filePath: String): Unit = {
-    val indexEntries = Index.readIndex()
+    val indexEntries = Utils.readIndex()
 
     if (!indexEntries.contains(filePath)) {
       Messages.raiseError(s"Error: File $filePath is not tracked!")
       return
     }
 
-    Index.removeFromIndex(filePath)
+    Utils.removeFromIndex(filePath)
     Messages.printMsg(s"Removed $filePath from index (cached).")
   }
 }

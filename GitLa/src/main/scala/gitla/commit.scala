@@ -1,8 +1,6 @@
 package gitla
 
 import java.nio.file.{Files, Paths}
-import java.time.Instant
-import java.security.MessageDigest
 import java.time.{Instant, ZoneId, ZonedDateTime}
 import java.time.format.DateTimeFormatter
 import java.nio.charset.StandardCharsets
@@ -10,34 +8,29 @@ import java.nio.charset.StandardCharsets
 object Commit {
 
   def createCommit(message: String): Unit = {
-    val indexEntries = Index.readIndex()
+    val indexEntries = Utils.readIndex()
 
-    // Step 1: Check if a commit is needed
     if (!needCommit(indexEntries)) {
       println("You have no new commitments.")
       return
     }
 
-    // Step 2: Update all entries to state `C`
     val updatedIndex = indexEntries.map { case (filePath, (hash, _)) => filePath -> (hash, "C") }
-    Index.writeIndex(updatedIndex)
+    Utils.writeIndex(updatedIndex)
 
-    // Step 3: Create a hash for the index file
     val indexPath = Paths.get(".gitla/index")
-    val indexHash = Blob.calculateHash(indexPath.toString)
+    val indexHash = Utils.calculateHash(indexPath.toString)
     val indexContent = Files.readAllBytes(indexPath)
-    Blob.createBlob(indexHash, indexContent, "indexObject")
+    Utils.createBlob(indexHash, indexContent, "indexObject")
 
-    // Step 4: Create the commit object
-    val prevHash = Head.getPrevHash.getOrElse("")
+    val prevHash = Utils.getPrevCommit.getOrElse("")
     val timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     .format(ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()))
     val commitContent = s"Previous Commit: $prevHash\nCommit Message: $message\nTime: $timestamp\nContent: $indexHash"
-    val commitHash = Blob.calculateCommitHash(commitContent)
-    Blob.createBlob(commitHash, commitContent.getBytes("UTF-8"), "commitObject")
+    val commitHash = Utils.calculateCommitHash(commitContent)
+    Utils.createBlob(commitHash, commitContent.getBytes("UTF-8"), "commitObject")
 
-    // Step 5: Update the head file with the new commit hash
-    Head.updateCurrHash(commitHash)
+    Utils.updateHead(commitHash)
 
     println(s"Commit created with hash: $commitHash")
   }
@@ -55,9 +48,8 @@ object Commit {
       return None
     }
     val fileContent = Files.readAllBytes(commitFilePath)
-    //val decompressedContent = Blob.decompress(Files.readAllBytes(commitFilePath))
+    //val decompressedContent = Utils.decompress(Files.readAllBytes(commitFilePath))
 
-    // Assuming the commit blob has a fixed format, we parse it line by line.
     val lines = new String(fileContent, StandardCharsets.UTF_8).split("\n")
     val prevHash = lines.find(_.startsWith("Previous Commit:")).map(_.split(":")(1).trim).getOrElse("")
     val message = lines.find(_.startsWith("Commit Message:")).map(_.split(":")(1).trim).getOrElse("")

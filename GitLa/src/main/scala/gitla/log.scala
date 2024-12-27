@@ -1,12 +1,9 @@
 package gitla
 
-import java.nio.file.{Files, Paths}
-import scala.util.Try
-
 object Log {
 
   def displayLog(): Unit = {
-    val headHash = Head.getPrevHash.getOrElse("")
+    val headHash = Utils.getPrevCommit.getOrElse("")
     if (headHash.isEmpty) {
       Messages.printMsg("You haven't committed yet.")
       return

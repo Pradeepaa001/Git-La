@@ -3,9 +3,9 @@ package gitla
 
 import java.nio.file.{Files, Paths, StandardOpenOption}
 import java.nio.charset.StandardCharsets
-import scala.util.{Try, Success, Failure}
-import scala.jdk.CollectionConverters._
+import scala.util.Try
 import scala.util.boundary
+import scala.collection.JavaConverters.asScalaIteratorConverter
 
 object JumpTo {
   def jumpto(commitHash: String): Unit = {
@@ -39,9 +39,9 @@ object JumpTo {
 
       jumptoFiles(indexEntries)
 
-      Index.writeIndex(indexEntries)      
+      Utils.writeIndex(indexEntries)      
 
-      Head.updateCurrHash(commitHash)
+      Utils.updateHead(commitHash)
       
       Messages.printMsg(s"Successfully jumped to commit: $commitHash")
     } catch {

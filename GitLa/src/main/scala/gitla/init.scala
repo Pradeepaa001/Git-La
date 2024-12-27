@@ -1,10 +1,6 @@
 package gitla
 
 import java.io.{File, PrintWriter}
-import java.nio.file.{Files, Paths}
-import java.nio.charset.StandardCharsets
-import java.nio.file.StandardOpenOption
-import scala.io.Source
 
 object GitlaApp {
 

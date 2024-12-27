@@ -1,5 +1,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mPackaging /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/gitla_3-0.1-sources.jar ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	gitla/utils.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/utils.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	gitla/log.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/log.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	gitla/config_parser.scala[0m
@@ -10,16 +12,10 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/gitla.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	gitla/init.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/init.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	gitla/blob.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/blob.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	gitla/status.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/status.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	gitla/index.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/index.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	gitla/message.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/message.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	gitla/head.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/head.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	gitla/rm.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/pradee/optboot/class/lang/finalgit/gitla/GitLa/src/main/scala/gitla/rm.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	gitla/jumpto.scala[0m

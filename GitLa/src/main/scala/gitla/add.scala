@@ -1,39 +1,36 @@
 package gitla
 
-import java.nio.file.{Files, Paths, StandardOpenOption}
-import java.security.MessageDigest
-import java.io.ByteArrayOutputStream
-import java.util.zip.{Deflater, DeflaterOutputStream}
-import scala.jdk.CollectionConverters._
+import java.nio.file.{Files, Paths}
+import scala.collection.JavaConverters.asScalaIteratorConverter
 
 object Add {
 
   def gitAdd(filePath: String): Unit = {
 
     val fileToAdd = Paths.get(filePath)
-    val indexEntries = Index.readIndex()
+    val indexEntries = Utils.readIndex()
 
     if (!Files.exists(fileToAdd)) {
       if (indexEntries.contains(filePath)) {
-        Index.removeFromIndex(filePath)
+        Utils.removeFromIndex(filePath)
       } else {
         Messages.raiseError(s"File '$filePath' does not exist.")
       }      
     }
 
     val fileContent = Files.readAllBytes(fileToAdd)
-    val newHash = Blob.calculateHash(filePath)
+    val newHash = Utils.calculateHash(filePath)
     val destFile = "fileObject"
     indexEntries.get(filePath) match {
       case Some((existingHash, _)) =>
         if (existingHash != newHash) {
-          Index.updateIndex(filePath, newHash, "M")
-          Blob.createBlob(newHash, fileContent,destFile)
+          Utils.updateIndex(filePath, newHash, "M")
+          Utils.createBlob(newHash, fileContent,destFile)
           Messages.printMsg(s"Modified '$filePath' in the index.")
         }
       case None =>
-        Index.updateIndex(filePath, newHash, "A")
-        Blob.createBlob(newHash, fileContent,destFile)
+        Utils.updateIndex(filePath, newHash, "A")
+        Utils.createBlob(newHash, fileContent,destFile)
         Messages.printMsg(s"Added '$filePath' to the index.")
     }
   }
