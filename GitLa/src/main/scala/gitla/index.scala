@@ -15,7 +15,7 @@ object Index {
       .filter(_.trim.nonEmpty)
       .map { line =>
         val parts = line.split(" ")
-        if (parts.length == 3) parts(0) -> (parts(1), parts(2)) else throw new IllegalArgumentException(s"Malformed index entry: $line")
+        if (parts.length == 3) parts(0) -> (parts(1), parts(2)) else Messages.raiseError(s"Malformed index entry: $line")
       }
       .toMap
   }

@@ -17,7 +17,7 @@ object Add {
       if (indexEntries.contains(filePath)) {
         Index.removeFromIndex(filePath)
       } else {
-        throw new IllegalArgumentException(s"File '$filePath' does not exist.")
+        Messages.raiseError(s"File '$filePath' does not exist.")
       }      
     }
 
@@ -29,13 +29,12 @@ object Add {
         if (existingHash != newHash) {
           Index.updateIndex(filePath, newHash, "M")
           Blob.createBlob(newHash, fileContent,destFile)
-          println(s"Modified '$filePath' in the index.")
+          Messages.printMsg(s"Modified '$filePath' in the index.")
         }
       case None =>
-        // File not in index, add it with state 'A'
         Index.updateIndex(filePath, newHash, "A")
         Blob.createBlob(newHash, fileContent,destFile)
-        println(s"Added '$filePath' to the index.")
+        Messages.printMsg(s"Added '$filePath' to the index.")
     }
   }
 
@@ -47,7 +46,7 @@ object Add {
       .asScala
       .foreach { filePath =>
         val relativePath = currentDir.relativize(filePath).toString
-        gitAdd(relativePath) // Directly reuse the `gitAdd` function
+        gitAdd(relativePath)
       }
   }
 }

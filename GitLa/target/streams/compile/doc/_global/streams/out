@@ -13,10 +13,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/ConfigParser.tasty[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Gitla.tasty[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/GitlaApp.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/GitlaException.tasty[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Head.tasty[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Index.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/JumpTo.tasty[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Log.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Messages.tasty[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Remove.tasty[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Restore.tasty[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/home/pradee/optboot/class/lang/finalgit/gitla/GitLa/target/scala-3.6.2/classes/gitla/Status.tasty[0m
 [0m[[0m[0minfo[0m] [0m[0mMain Scala API documentation successful.[0m

@@ -33,18 +33,17 @@ object Blob {
     Files.write(blobFilePath, fileContent, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
   }
 
-  def compress(data: Array[Byte]): Array[Byte] = {
-    val outputStream = new ByteArrayOutputStream()
-    val deflaterStream = new DeflaterOutputStream(outputStream, new Deflater())
-    deflaterStream.write(data)
-    deflaterStream.close()
-    outputStream.toByteArray
-  }
+  // def compress(data: Array[Byte]): Array[Byte] = {
+  //   val outputStream = new ByteArrayOutputStream()
+  //   val deflaterStream = new DeflaterOutputStream(outputStream, new Deflater())
+  //   deflaterStream.write(data)
+  //   deflaterStream.close()
+  //   outputStream.toByteArray
+  // }
   def calculateCommitHash(content: String): String = {
     val digest = MessageDigest.getInstance("SHA-1")
     val hashBytes = digest.digest(content.getBytes("UTF-8"))
     hashBytes.map("%02x".format(_)).mkString
-  }
-  
+  }  
 
 }

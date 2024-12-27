@@ -13,7 +13,7 @@ object GitlaApp {
     val gitlaDir = new File(s"$repoDir/.gitla")
 
     if (gitlaDir.exists()) {
-      println(s"This directory is already a git repository: $repoDir")
+      Messages.printMsg(s"This directory is already a git repository: $repoDir")
     } else {
       createRepoStructure(repoDir, gitlaDir)
       ConfigParser.updateConfig(repoName.getOrElse(""), repoDir)

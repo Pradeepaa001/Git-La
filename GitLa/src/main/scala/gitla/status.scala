@@ -11,9 +11,7 @@ object Status {
     val untrackedFiles = scala.collection.mutable.ListBuffer[String]()
     val changesToBeStaged = scala.collection.mutable.ListBuffer[String]()
     val changesToBeCommitted = scala.collection.mutable.ListBuffer[String]()
-    //val deletedFiles = scala.collection.mutable.ListBuffer[String]()
 
-    // Step 1: Find untracked files (files in the directory but not in the index)
     Files.walk(currentDir)
       .filter(path => Files.isRegularFile(path) && !path.toString.contains(".gitla"))
       .iterator()
@@ -23,11 +21,9 @@ object Status {
         if (!indexEntries.contains(relativePath)) {
           untrackedFiles += s"\tnew file: $relativePath"
         } else {
-          // Step 2: Files in index but modified or deleted
           val (fileHash, state) = indexEntries(relativePath)
 
           if (Files.exists(filePath)) {
-            // File exists, check if the hash differs
             val newHash = Blob.calculateHash(relativePath)
             if (newHash != fileHash) {
               changesToBeStaged += s"\tmodified: $relativePath"
@@ -41,10 +37,8 @@ object Status {
       }
     }
 
-    // Step 3: Files with state "A" or "M" in the index are ready to be committed
     indexEntries.foreach { case (filePath, (fileHash, state)) =>
        if (Files.exists(Paths.get(filePath))) {
-        // If the file exists, check its state
         if (state == "A") {
           changesToBeCommitted += s"\tnew file: $filePath"
         }
@@ -54,23 +48,22 @@ object Status {
       }
     }
 
-    // Step 4: Output status
     if (changesToBeCommitted.nonEmpty) {
-      println("Changes to be committed:")
+      Messages.printMsg("Changes to be committed:")
       changesToBeCommitted.foreach(println)
     }
     if (changesToBeStaged.nonEmpty) {
-      println("Changes to be added:")
+      Messages.printMsg("Changes to be added:")
       changesToBeStaged.foreach(println)    
     }
     if (untrackedFiles.nonEmpty) {
-      println("Untracked files:")
+      Messages.printMsg("Untracked files:")
       untrackedFiles.foreach(println)
     } 
 
     if (!changesToBeCommitted.nonEmpty && !changesToBeStaged.nonEmpty && !untrackedFiles.nonEmpty) {
       
-      println("You are free from Commitments")
+      Messages.printMsg("You are free from Commitments")
     }
   }
 }

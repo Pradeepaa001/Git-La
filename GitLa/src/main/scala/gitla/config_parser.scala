@@ -12,7 +12,7 @@ object ConfigParser {
       val writer = new PrintWriter(file)
       try {
         writer.println(content)
-        println(s"Created new file at ${file.getAbsolutePath}")
+        Messages.printMsg(s"Created new file at ${file.getAbsolutePath}")
       } finally {
         writer.close()
       }
@@ -48,13 +48,13 @@ object ConfigParser {
     if (globalFile.exists()) {
       parseToml(readFile(globalFile))
     } else {
-      println("Global Config not found. Creating a new one.")
+      Messages.printMsg("Global Config not found. Creating a new one.")
       createGlobalConfig(globalFile)
     }
   }
 
   def createGlobalConfig(file: File): Map[String, String] = {
-    println("Creating a new global config. Please enter your details.")
+    Messages.printMsg("Creating a new global config. Please enter your details.")
     val name = promptInput("Enter your name:")
     val email = promptInput("Enter your email:")
 
@@ -66,12 +66,12 @@ object ConfigParser {
          |""".stripMargin
 
     writeToFile(file, content)
-    println(s"Global config created at ${file.getAbsolutePath}")
+    Messages.printMsg(s"Global config created at ${file.getAbsolutePath}")
     parseToml(content.split("\n").toList)
   }
 
   private def promptInput(prompt: String): String = {
-    println(prompt)
+    Messages.printMsg(prompt)
     scala.io.StdIn.readLine()
   }
 
@@ -87,7 +87,7 @@ object ConfigParser {
          |""".stripMargin
 
     writeToFile(localFile, content)
-    println(s"Updated .gitla/config in repository: $repoDir")
+    Messages.printMsg(s"Updated .gitla/config in repository: $repoDir")
   }
 
   private def formatSection(section: String, data: Map[String, String]): String = {
@@ -96,14 +96,14 @@ object ConfigParser {
 
   def addSection(file: File, sectionName: String): Unit = {
     appendToFile(file, s"[$sectionName]")
-    println(s"Added section [$sectionName] to ${file.getAbsolutePath}")
+    Messages.printMsg(s"Added section [$sectionName] to ${file.getAbsolutePath}")
   }
 
   def updateSection(file: File, sectionName: String, key: String, value: String): Unit = {
     val lines = readFile(file)
     val updatedLines = updateOrAppendSection(lines, sectionName, key, value)
     writeToFile(file, updatedLines.mkString("\n"))
-    println(s"Updated [$sectionName] in ${file.getAbsolutePath}")
+    Messages.printMsg(s"Updated [$sectionName] in ${file.getAbsolutePath}")
   }
 
   private def updateOrAppendSection(lines: List[String], section: String, key: String, value: String): List[String] = {
@@ -119,10 +119,10 @@ object ConfigParser {
 
   def viewConfig(file: File): Unit = {
     if (file.exists()) {
-      println(s"Contents of ${file.getAbsolutePath}:")
+      Messages.printMsg(s"Contents of ${file.getAbsolutePath}:")
       readFile(file).foreach(println)
     } else {
-      println(s"Config file not found: ${file.getAbsolutePath}")
+      Messages.printMsg(s"Config file not found: ${file.getAbsolutePath}")
     }
   }
 
@@ -134,7 +134,7 @@ object ConfigParser {
       case "add" => validateArgs(args, 1) { addSection(globalFile, args(0)) }
       case "update" => validateArgs(args, 3) { updateSection(globalFile, args(0), args(1), args(2)) }
       case "create" => createGlobalConfig(globalFile)
-      case _ => println(s"Unknown global config command: $command")
+      case _ => Messages.raiseError(s"Unknown global config command: $command")
     }
   }
 
@@ -145,16 +145,16 @@ object ConfigParser {
       case "view" => viewConfig(localFile)
       case "add" => validateArgs(args, 1) { addSection(localFile, args(0)) }
       case "update" => validateArgs(args, 3) { updateSection(localFile, args(0), args(1), args(2)) }
-      case _ => println(s"Unknown local config command: $command")
+      case _ => Messages.raiseError(s"Unknown local config command: $command")
     }
   }
 
   private def validateArgs(args: Array[String], expected: Int)(action: => Unit): Unit = {
-    if (args.length < expected) println(s"Invalid number of arguments. Expected $expected.") else action
+    if (args.length < expected) Messages.raiseError(s"Invalid number of arguments. Expected $expected.") else action
   }
 
   def showHelp(): Unit = {
-    println(
+    Messages.printMsg(
       """
         |Usage: gitla config [--global|--local] <command> [args]
         |

@@ -10,11 +10,9 @@ object Gitla {
     val command = args.headOption.getOrElse("")
     val commandArgs = args.tail
 
-    println(s"Command: $command, Arguments: $commandArgs") // Debugging line
-
     command match {
       case "init" =>
-        println("Running init command")
+        Messages.printMsg("Running init command")
         GitlaApp.gitInit(commandArgs.headOption)
       case "add" =>
         if (commandArgs.length == 1 && commandArgs(0) == ".") {
@@ -22,7 +20,7 @@ object Gitla {
         } else if (commandArgs.length == 1) {
           Add.gitAdd(commandArgs(0))
         } else {
-          println("Usage: gitla add <file-path> or gitla add .")
+          Messages.printMsg("Usage: gitla add <file-path> or gitla add .")
         }
       case "config" =>
         if (commandArgs.isEmpty) {
@@ -30,7 +28,7 @@ object Gitla {
         } else {
           if (commandArgs.contains("--global")) {
             if (commandArgs.length < 2) {
-              println("Usage: gitla config --global <view|add|update|create>")
+              Messages.printMsg("Usage: gitla config --global <view|add|update|create>")
             } else {
               val globalCommand = commandArgs(0)
               val globalArgs = commandArgs.drop(1)
@@ -45,26 +43,26 @@ object Gitla {
         }
       case "rm" => 
         if (commandArgs.isEmpty){
-          println("Usage: gitla rm <file-path> or gitla rm --cached <file-path>")
+          Messages.printMsg("Usage: gitla rm <file-path> or gitla rm --cached <file-path>")
         } else {
             if (commandArgs.length == 2 && commandArgs(0) == "--cached") {
               Remove.gitRemoveCached(commandArgs(1))
             } else if (commandArgs.length == 1) {
               Remove.gitRemove(commandArgs(0))
             } else {
-              println("Invalid usage. Try: gitla rm <file-path> or gitla rm --cached <file-path>")
+              Messages.printMsg("Invalid usage. Try: gitla rm <file-path> or gitla rm --cached <file-path>")
             }
         }
       case "status" =>
-        println("Running status command")
+        Messages.printMsg("Running status command")
         Status.gitStatus()
       case "commit" =>
-        println("Running commit command")
+        Messages.printMsg("Running commit command")
         Commit.createCommit(commandArgs(0))
       case "log" =>
-        println("Running log command")
+        Messages.printMsg("Running log command")
         Log.displayLog()
-      case "restore" =>
+      case "jumpto" =>
         var commitHash: String = ""
         if (commandArgs.isEmpty) {
           commitHash = Head.getPrevHash.getOrElse("")
@@ -72,12 +70,12 @@ object Gitla {
           commitHash = commandArgs(0)
         }
         if (commitHash.isEmpty) {
-            println("Commit hash is empty or invalid.")
+            Messages.raiseError("Commit hash is empty or invalid.")
         }else{
-        println("Running restore command")
-        Restore.restore(commitHash)}
+        Messages.printMsg("Running jumpto command")
+        JumpTo.jumpto(commitHash)}
       case _ =>
-        println(s"Unknown command: $command")
+        Messages.raiseError(s"Unknown command: $command")
     }
   }
 }
